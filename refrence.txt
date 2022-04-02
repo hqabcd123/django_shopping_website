@@ -1,0 +1,7 @@
+https://docs.djangoproject.com/en/2.2/howto/static-files/
+https://creepfablic.site/2019/11/20/django-static/
+https://stackoverflow.com/questions/57988547/how-to-make-html-call-a-javascript-function-from-an-external-js-file-in-django
+
+Went you want to use a javascript file on the django platform
+first you should do is create a static file and put all the js file and css file inside static file
+and makesure the setting.py.STATIC_DIR has written
