@@ -5,3 +5,7 @@ https://stackoverflow.com/questions/57988547/how-to-make-html-call-a-javascript-
 Went you want to use a javascript file on the django platform
 first you should do is create a static file and put all the js file and css file inside static file
 and makesure the setting.py.STATIC_DIR has written
+
+
+https://stackoverflow.com/questions/44999215/accessing-non-static-images-in-django
+if want to set non static file at django , just go to setting file and change the file
