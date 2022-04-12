@@ -13,3 +13,6 @@ if want to set non static file at django , just go to setting file and change th
 
 https://stackoverflow.com/questions/38654599/django-best-way-to-pass-data-to-javascript
 pass data with autoscape off on html
+
+https://stackoverflow.com/questions/40000495/how-to-encode-bytes-in-json-json-dumps-throwing-a-typeerror
+json data cant encode base64 because base64 is bytes type and json only can encode string type so must trans base64 to ascii string before passing to javascript
