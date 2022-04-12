@@ -10,3 +10,6 @@ and makesure the setting.py.STATIC_DIR has written
 https://stackoverflow.com/questions/44999215/accessing-non-static-images-in-django
 https://qiita.com/okoppe8/items/86776b8df566a4513e96
 if want to set non static file at django , just go to setting file and change the file
+
+https://stackoverflow.com/questions/38654599/django-best-way-to-pass-data-to-javascript
+pass data with autoscape off on html
