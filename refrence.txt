@@ -16,3 +16,8 @@ pass data with autoscape off on html
 
 https://stackoverflow.com/questions/40000495/how-to-encode-bytes-in-json-json-dumps-throwing-a-typeerror
 json data cant encode base64 because base64 is bytes type and json only can encode string type so must trans base64 to ascii string before passing to javascript
+
+//css refrence
+/********************************************************************/
+https://stackoverflow.com/questions/7421775/css-i-want-a-div-to-be-on-top-of-everything
+/********************************************************************/
