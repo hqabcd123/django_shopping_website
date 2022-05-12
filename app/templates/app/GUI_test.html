@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap4 %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<html lang="en">
+  <head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href={%static "./css/styles.css" %} rel="stylesheet" text="text/css" >
+    <link href={%static "./css/canvas_styles.css" %} rel="stylesheet" text="text/css" >
+    <script type="text/javascript" src={% static "./js/images_process.js" %}></script>
+    <script type="text/javascript" src={% static "./js/GUI_test.js" %}></script>
+    <meta charset="UTF-8">
+    <title>GUI</title>
+  </head>
+  <body>
+    {% comment %} <button id="navbber_togger" type="button" data-toggle="collapse" data-target="#navbarNAV" aria-controls="navbarNAV" 
+    aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar_icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNAV">
+      <!-- 1st navbar  -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home<spam class="sr-only">(current)</spam></a>
+        </li>
+        <li class="nav-bar dropdown">
+          <a id="navbar_dropdown_meun" class="nav-bar dropdown-toggle" href="#" data-toggle="dropdown" aria-haspoupa="true" 
+          aria-expanded="false">
+            menuItem
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbar_dropdown_meun">
+            <!-- -->>
+          </div>
+        </li>
+      </ul>
+    </div> {% endcomment %}
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">LOGO</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2" 
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav2">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a id="nav_Canvas" class="nav-link" href="#">Canvas</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div id="GUI_window_navbar">
+      <span class="close">&times;</span>
+      <canvas class="canvas_test"></canvas>
+    </div>
+
+    <script type="text/javascript">
+      var canvas2 = $("#GUI_window_navbar .canvas_test");
+      var ctx2 = canvas2[0].getContext("2d");
+      $("document").ready(function()
+      {
+        $("#navbarNav2 #nav_Canvas").on("click", function()
+        {
+          $("#GUI_window_navbar .canvas_test").css("display", "block");
+          Draw(canvas2, ctx2);
+        });
+        $(".class").on("click", function()
+        {
+          $("#GUI_window_navbar .canvas_test").css("display", "none");
+        });
+      });
+    </script>
+    
+    
+    <div class='container'>
+
+      {% comment %} <h1>EEEEEEEEEEEEEEEEEEEEEEEE</h1>
+      <img id="image" src={% static "./media/hio01.png" %} href="javascript:void(0);" alt="image">
+      <img id="images_container" src="/Media/Icannotaccept.jpg"></img>
+      <br> {% endcomment %}
+      <div id="IMGarray">
+        <img class="bottom" src="/Media/IMG_1018.JPG"></img>
+        <img class="top" src="/Media/HSa78ycfqdiVYAcM.jpg"></img>
+      </div>
+
+      <br>
+      <div id="GUI_window">
+        <canvas class="canvas_test"></canvas>
+      </div>
+      <p>mouse location is: <spam id="spam_mouse_location"></spam></p>
+
+      <script type="text/javascript">
+        var canvas = $("#GUI_window .canvas_test");
+        var ctx = canvas[0].getContext("2d");
+        canvas.attr("width", 1000);
+        canvas.attr("height", 1000);
+        Draw(canvas, ctx);
+      </script>
+      
+      <script type="text/javascript">
+        //console.log("{{Json_img_dir}}")
+        var Json_img = {% autoescape off %}{{Json_img_dir}}{% endautoescape %}
+        $(document).ready(function ()
+        {
+          images_loop(Json_img);
+        });
+      </script>
+
+      <br>
+      <br>
+
+      <form id="form1" action="#">
+        <input type="text" id="input-message">
+        <input type="submit" onclick="Clickbox()" value="input">
+        <br>
+        <label id="output-message"></label>
+      </form>
+        <script>Clickbox()</script>
+    </div>  
+  </body>
+</html>

@@ -22,13 +22,10 @@ async function images_loop(Json_img_dir)
     for (y = 0; y < 10; y++)
     {
         IMG_laying(IMGArray, i, count);
-        await new Promise(resolve => setTimeout(resolve, delay_in_seconds*3));
+        await new Promise(resolve => setTimeout(resolve, delay_in_seconds));
         i += 1;
         count += 1;
-        if (i > IMGArray.length-1)
-        {
-            i = 0;
-        }
+        if (i > IMGArray.length-1) i = 0;
         if (count > MAX_count) count = 0;
     }
 }
@@ -39,13 +36,15 @@ async function IMG_laying(IMGArray, i, count)
     $("#IMGarray img.top").toggleClass("transparent");
     if (count % 2 == 0)
     {
-        console.log("top");
+        console.log("trans top");
+        await new Promise(resolve => setTimeout(resolve, delay_in_seconds));
         $("#IMGarray img.top").attr("src", IMGArray[i].src);
         console.log("top img src: " + $("#IMGarray img.top").attr("src"));
     }
     else
     {
-        console.log("bottom");
+        console.log("trans bottom");
+        await new Promise(resolve => setTimeout(resolve, delay_in_seconds));
         $("#IMGarray img.bottom").attr("src", IMGArray[i].src);
         console.log("bottom img src: " + $("#IMGarray img.bottom").attr("src"));
     }
