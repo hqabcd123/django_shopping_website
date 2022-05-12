@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "name": "aws-django-test1",
+  "description": "django-ract-cn",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hqabcd123/aws-django-test1.git"
+  },
+  "keywords": [
+    "django"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hqabcd123/aws-django-test1/issues"
+  },
+  "homepage": "https://github.com/hqabcd123/aws-django-test1#readme"
+}
