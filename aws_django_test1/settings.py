@@ -131,7 +131,8 @@ ROOT_URLCONF = 'aws_django_test1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates').replace('\\', '/')],
+        'DIRS': [os.path.join(BASE_DIR, 'django_react/build')],
+        # 'DIRS': [os.path.join(BASE_DIR, 'templates').replace('\\', '/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -195,7 +196,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "django_react/build/static"),
+    #os.path.join(BASE_DIR, "/static/"),
 )
 
 STATIC_URL = '/static/'

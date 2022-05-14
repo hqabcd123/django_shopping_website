@@ -4,7 +4,8 @@ import json
 from app.img_base64_convert import img_base64_convert as conveter
 
 def home(request):
-    return render(request, 'app/app.html')
+    return render(request, 'index.html')
+    #return render(request, 'app/app.html')
 
 def GUI_test(request):
     current_path = os.path.dirname(__file__)
