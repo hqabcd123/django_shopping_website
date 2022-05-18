@@ -21,3 +21,11 @@ json data cant encode base64 because base64 is bytes type and json only can enco
 /********************************************************************/
 https://stackoverflow.com/questions/7421775/css-i-want-a-div-to-be-on-top-of-everything
 /********************************************************************/
+
+
+react-django refrence
+/********************************************************************/
+https://qiita.com/shiranon/items/8182445975dff4cf19a6#react%E3%81%A8django%E3%81%AE%E9%80%A3%E6%90%BA
+https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react#step-3-setting-up-the-frontend
+https://ithelp.ithome.com.tw/articles/10214942
+/********************************************************************/

@@ -4,6 +4,10 @@ import json
 from app.img_base64_convert import img_base64_convert as conveter
 
 def home(request):
+<<<<<<< Updated upstream
+=======
+    #return render(request, 'index.html')
+>>>>>>> Stashed changes
     return render(request, 'app/app.html')
 
 def GUI_test(request):

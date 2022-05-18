@@ -1,3 +1,19 @@
+canvasObj = {};
+
+class diagram {
+    constructor(g)
+    //
+}
+
+class line{
+    //
+}
+
+class cricle{
+    //
+}
+
+
 function Clickbox()
 {
     var message = document.getElementById("input-message").value;
@@ -5,48 +21,105 @@ function Clickbox()
     document.getElementById("output-message").innerHTML = message;
 }
 
-function check_window_offset(Xoffset, Yoffset)
-//true => window is offseted
-{
-    if (window.pageXOffset == 0 && window.pageYOffset == 0) return false;
-    else return true;
-}
 
-function Draw(canvas, ctx)
+
+function Draw()
 {
     var mousedown_check = false;
     var X = 0, Y = 0;
-    var offset = canvas.offset();
-    console.log("cnavas position is " + offset.top + ", " + offset.left);
-    ctx.beginPath();
+    var offset = canvasObj.canvas.offset();
+    console.log(canvasObj.graph);
+    canvasObj.ctx.beginPath();
     $(document).ready(function ()
     {
-        canvas.mousedown(function(e)
+        canvasObj.canvas.mousedown(function(e)
         {
-            //get mouse position and draw a graph
-            X = (e.clientX - offset.left) + window.pageXOffset;
-            Y = (e.clientY - offset.top) + window.pageYOffset;
-            console.log("mouse location: x " + (e.clientX + window.pageXOffset) + " , y " + (e.clientY + window.pageYOffset));
-            console.log("osffset position " + offset.top + ", " + offset.left);
-            ctx.beginPath();
-            ctx.moveTo(X, Y);
-            mousedown_check = true;
+            switch(canvasObj.graph)
+            {
+                case "line":
+                    offset = canvasObj.canvas.offset();
+                    //console.log("canvas position is " + offset.top + ", " + offset.left + canvasObj.graph);
+                    X = (e.clientX - offset.left) + window.pageXOffset;
+                    Y = (e.clientY - offset.top) + window.pageYOffset;
+                    //console.log("mouse location: x " + X + " , y " + Y);
+                    //console.log("osffset position " + offset.top + ", " + offset.left);
+                    canvasObj.ctx.beginPath();
+                    canvasObj.ctx.moveTo(X, Y);
+                    mousedown_check = true;
+                    return ;
+                    break;
+                case "circle":
+                    console.log("inside cricle");
+                    break;
+                default:
+                    //alert("hello");
+            }
+
         });
-        canvas.mousemove(function(e)
+        canvasObj.canvas.mousemove(function(e)
         {
             if (mousedown_check)
             {
-                console.log("mouse location: x " + e.clientX + " , y " + e.clientY);
-                X = (e.clientX - offset.left) + window.pageXOffset;
-                Y = (e.clientY - offset.top) + window.pageYOffset;
-                $("#spam_mouse_location").text((X + ", " + Y));
-                ctx.lineTo(X, Y);
-                ctx.stroke();
+                switch(canvasObj.graph)
+                {
+                    case "line":
+                        //console.log("mouse location: x " + e.clientX + " , y " + e.clientY);
+                        X = (e.clientX - offset.left) + window.pageXOffset;
+                        Y = (e.clientY - offset.top) + window.pageYOffset;
+                        $("#spam_mouse_location").text((X + ", " + Y));
+                        canvasObj.ctx.lineTo(X, Y);
+                        canvasObj.ctx.stroke();
+                        break;
+                    case "circle":
+                        //console.log("inside cricle");
+                        break;
+                    default:
+                        //console.log("hello");
+                }
+                
             }
         });
-        canvas.mouseup(function(e)
+        canvasObj.canvas.mouseup(function(e)
         {
             mousedown_check = false;
+            return ;
         });
     });
+}
+
+function canvas_main()
+{
+    var canvas2 = $("#GUI_window_navbar .canvas_test");
+      var ctx2 = canvas2[0].getContext("2d");
+      var graph = "line";//line
+      canvasObj = {
+        canvas : canvas2,
+        ctx : ctx2,
+        graph : graph
+    };
+      console.log("canvas obj " + canvasObj.graph);
+      canvas2.attr("width", window.innerWidth);
+      canvas2.attr("height", window.innerHeight);
+      $("document").ready(function()
+      {
+        $("#navbarNav2 #nav_Canvas").on("click", function()
+        {
+          $("#GUI_window_navbar").css("display", "grid");
+          Draw();
+        });
+        $(".close").on("click", function()
+        {
+          $("#GUI_window_navbar").css("display", "none");
+        });
+        $("#circle").on("click", function()
+        {
+          console.log("click event triggle");
+          canvasObj.graph = "circle";
+        });
+        $("#line").on("click", function()
+        {
+          console.log("click event triggle");
+          canvasObj.graph = "line";
+        });
+      });
 }
