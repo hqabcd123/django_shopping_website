@@ -18,3 +18,7 @@ def GUI_test(request):
     print (Json_img_dir)
     #print ([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
     return render(request, 'app/GUI_test.html', locals())
+
+def login(request):
+    ##
+    return render(request, 'app/login.html', locals())

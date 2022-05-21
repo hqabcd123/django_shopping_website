@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap4 %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<html lang="en">
+  <head>
+    <link href={%static "./css/login.css" %} rel="stylesheet" text="text/css" >
+    <meta charset="UTF-8">
+    <title>Title</title>
+  </head>
+  <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'GUI_test' %}">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2" 
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav2">
+        <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="#">User login <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a id="nav_Canvas" class="nav-link" href="#">Canvas</a>
+        </li>
+        </ul>
+    </div>
+    </nav>
+  
+    <div class='container'>
+      <form action=""method="post">{% csrf_token %}
+        <label for="username">username: </label>
+        <input id="username" type="text" name="username" value="">
+        <br/>
+        <label for="password">password: </label>
+        <input id="password" type="text" name="password" value="">
+        <br/>
+        <input type="submit" value="login">
+      </form>
+    </div>
+  </body>
+</html>
