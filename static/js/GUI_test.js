@@ -13,19 +13,19 @@ class diagram {
     }
 }
 
-class cricle
+class circle
 {
     constructor(point){
         /*using 3point to count area surface and build 3dmodel*/
         this.first_point = {X: point[0].X, Y: point[0].Y};
         this.second_point = {X: point[1].X, Y: point[1].Y};
         this.final_point = {X: point[2].X, Y: point[2].Y};
-        this.draw_cricle();
+        this.draw_circle();
     }
 
-    draw_cricle()
+    draw_circle()
     {
-        /*calculate X, Y position and calculate radius of this cricle*/
+        /*calculate X, Y position and calculate radius of this circle*/
         var x12 = this.first_point.X - this.second_point.X;
         var y12 = this.first_point.Y - this.second_point.Y;
         var x13 = this.first_point.X - this.final_point.X;
@@ -42,6 +42,12 @@ class cricle
 
         this.r0 = Math.pow((this.final_point.X-this.x0), 2) + Math.pow((this.final_point.Y-this.y0), 2);
         this.r0 = Math.sqrt(this.r0);
+    }
+
+    set_final_point(final_point)
+    {
+        this.final_point = final_point;
+        this.draw_circle();
     }
 }
 
@@ -83,7 +89,7 @@ function Draw()
                     //return ;
                     break;
                 case "circle":
-                    console.log("inside cricle");
+                    console.log("inside circle");
                     offset = canvasObj.canvas.offset();
                     X = (e.clientX - offset.left) + window.pageXOffset;
                     Y = (e.clientY - offset.top) + window.pageYOffset;
@@ -91,7 +97,7 @@ function Draw()
                     count++;
                     if(count == 3)
                     {
-                        var crl = new cricle(point);
+                        var crl = new circle(point);
                         console.log(point);
                         console.log(crl.x0 + " " + crl.y0 + " " + crl.r0);
                         canvasObj.ctx.beginPath();
@@ -127,7 +133,7 @@ function Draw()
                         canvasObj.ctx.stroke();
                         break;
                     case "circle":
-                        //console.log("inside cricle");
+                        //console.log("inside circle");
                         break;
                     case "delete":
                         X = (e.clientX - offset.left) + window.pageXOffset;

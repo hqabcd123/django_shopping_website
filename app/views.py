@@ -2,6 +2,9 @@ from django.shortcuts import render,HttpResponse
 import os, os.path
 import json
 from app.img_base64_convert import img_base64_convert as conveter
+from django.contrib import auth
+from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
 
 def home(request):
     #return render(request, 'index.html')
@@ -20,5 +23,25 @@ def GUI_test(request):
     return render(request, 'app/GUI_test.html', locals())
 
 def login(request):
-    ##
-    return render(request, 'app/login.html', locals())
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(username = username, password = password)
+    if user is not None and user.is_active:
+        auth.login(request, user)
+        return HttpResponseRedirect('GUI_test/')
+    else:
+        return render(request, 'app/login.html', locals())
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect('GUI_test/')
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return HttpResponseRedirect('login/')
+    else:
+        form = UserCreationForm()
+    return render(request, 'app/register.html', locals())

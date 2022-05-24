@@ -216,3 +216,5 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000'
 ]
+
+LOGIN_REDIRECT_URL = "/app/GUI_test"

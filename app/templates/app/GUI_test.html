@@ -38,6 +38,16 @@
           </li>
         </ul>
       </div>
+
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+          {% if request.user.is_authenticated %}
+          <li id="nav-item-logout" class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">logout</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
     </nav>
 
     <div id="GUI_window_navbar">
