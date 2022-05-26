@@ -1,5 +1,10 @@
 canvasObj = {};
 
+/* 
+clearrect can't clean all circle
+is the thickness's problem or is something wrong at the clip or clearrect
+ */
+
 class diagram {
     constructor(g)
     {
@@ -20,10 +25,10 @@ class circle
         this.first_point = {X: point[0].X, Y: point[0].Y};
         this.second_point = {X: point[1].X, Y: point[1].Y};
         this.final_point = {X: point[2].X, Y: point[2].Y};
-        this.draw_circle();
+        this.cal_circle();
     }
 
-    draw_circle()
+    cal_circle()
     {
         /*calculate X, Y position and calculate radius of this circle*/
         var x12 = this.first_point.X - this.second_point.X;
@@ -47,7 +52,14 @@ class circle
     set_final_point(final_point)
     {
         this.final_point = final_point;
-        this.draw_circle();
+        this.cal_circle();
+    }
+
+    clear_circle(ctx)
+    {
+        ctx.clip();
+        ctx.clearRect(this.x0-this.r0, this.y0-this.r0, this.r0*2, this.r0*2);
+        ctx.restore();
     }
 }
 
@@ -59,7 +71,12 @@ function Clickbox()
     document.getElementById("output-message").innerHTML = message;
 }
 
-
+function draw_circle(ctx, crl)
+{
+    ctx.beginPath();
+    ctx.arc(crl.x0, crl.y0, crl.r0, 0, 2 * Math.PI);
+    ctx.stroke();
+}
 
 function Draw()
 {
@@ -68,6 +85,9 @@ function Draw()
     var offset = canvasObj.canvas.offset();
     var count = 0;
     var point = [];
+    var diagramObj = {
+        circle: [],
+    };
     console.log(canvasObj.graph);
     canvasObj.ctx.beginPath();
     $(document).ready(function ()
@@ -100,10 +120,14 @@ function Draw()
                         var crl = new circle(point);
                         console.log(point);
                         console.log(crl.x0 + " " + crl.y0 + " " + crl.r0);
-                        canvasObj.ctx.beginPath();
-                        canvasObj.ctx.arc(crl.x0, crl.y0, crl.r0, 0, 2 * Math.PI);
-                        canvasObj.ctx.stroke();
-                        count = 0;
+                        draw_circle(canvasObj.ctx, crl);
+                        diagramObj.circle.push(crl);
+                        point = [];
+                        mousedown_check = true;
+                    }
+                    else if (count == 4)
+                    {
+                        diagramObj.circle[0].clear_circle(canvasObj.ctx);
                     }
                     break;
                 case "delete":
@@ -133,7 +157,16 @@ function Draw()
                         canvasObj.ctx.stroke();
                         break;
                     case "circle":
-                        //console.log("inside circle");
+                        if (count == 7)
+                        {
+                            console.log("count = 3");
+                            X = (e.clientX - offset.left) + window.pageXOffset;
+                            Y = (e.clientY - offset.top) + window.pageYOffset;
+                            diagramObj.circle[0].clear_circle(canvasObj.ctx);
+                            diagramObj.circle[0].set_final_point({X: X, Y: Y});
+                            draw_circle(canvasObj.ctx, diagramObj.circle[0]);
+                        }
+                        else console.log("not = 3");
                         break;
                     case "delete":
                         X = (e.clientX - offset.left) + window.pageXOffset;
@@ -149,6 +182,7 @@ function Draw()
         canvasObj.canvas.mouseup(function(e)
         {
             mousedown_check = false;
+            if (count == 7) count = 0;
             return ;
         });
     });
