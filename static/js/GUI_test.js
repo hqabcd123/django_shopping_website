@@ -1,5 +1,11 @@
 canvasObj = {};
 
+diagramObj = {
+    line: [],
+    circle: [],
+    rectengle: [],
+};
+
 /* 
 clearrect can't clean all circle
 is the thickness's problem or is something wrong at the clip or clearrect
@@ -60,6 +66,56 @@ class circle
         ctx.clearRect(this.x0-this.r0-1, this.y0-this.r0-1, (this.r0*2)+2, (this.r0*2)+2);
         ctx.restore();
     }
+
+    get_x0()
+    {
+        return this.x0;
+    }
+}
+
+// csrf_tokenの取得に使う
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+function Send_data()
+{
+    var csrf_token = getCookie("csrftoken");
+    $.ajax({
+        method:"POST",
+        url: "Save_canvas/",
+        data: diagramObj,
+        datatype: "json",
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        },
+        success: function(data){
+            console.log("success");
+            console.log(data);
+        },
+        error: function(data){
+            alert("error");
+        },
+    })
 }
 
 
@@ -84,11 +140,6 @@ function Draw()
     var offset = canvasObj.canvas.offset();
     var count = 0;
     var point = [];
-    var diagramObj = {
-        line: [],
-        circle: [],
-        rectengle: [],
-    };
     console.log(canvasObj.graph);
     canvasObj.ctx.beginPath();
     $(document).ready(function ()
@@ -106,6 +157,7 @@ function Draw()
                     //console.log("osffset position " + offset.top + ", " + offset.left);
                     canvasObj.ctx.beginPath();
                     canvasObj.ctx.moveTo(X, Y);
+                    point.push({X: X, Y: Y});
                     mousedown_check = true;
                     //return ;
                     break;
@@ -152,16 +204,17 @@ function Draw()
                         $("#spam_mouse_location").text((X + ", " + Y));
                         canvasObj.ctx.lineTo(X, Y);
                         canvasObj.ctx.stroke();
+                        point.push({X: X, Y: Y});
                         break;
                     case "circle":
                         if (count == 3)
                         {
-                            console.log("count = 3");
+                            var i = diagramObj.circle.length-1;
                             X = (e.clientX - offset.left) + window.pageXOffset;
                             Y = (e.clientY - offset.top) + window.pageYOffset;
-                            diagramObj.circle[0].clear_circle(canvasObj.ctx);
-                            diagramObj.circle[0].set_final_point({X: X, Y: Y});
-                            draw_circle(canvasObj.ctx, diagramObj.circle[0]);
+                            diagramObj.circle[i].clear_circle(canvasObj.ctx);
+                            diagramObj.circle[i].set_final_point({X: X, Y: Y});
+                            draw_circle(canvasObj.ctx, diagramObj.circle[i]);
                         }
                         else console.log("not = 3");
                         break;
@@ -178,6 +231,18 @@ function Draw()
         });
         canvasObj.canvas.mouseup(function(e)
         {
+            switch (canvasObj.graph)
+                {
+                    case "line":
+                        diagramObj.line.push(point);
+                        point = []
+                        break;
+                    case "circle":
+
+                        break;
+                    default:
+                        break;
+                }
             mousedown_check = false;
             if (count == 3) count = 0;
             return ;
@@ -231,6 +296,11 @@ function canvas_main()
         $("#clear").on("click", function()
         {
             canvasObj.ctx.clearRect(0, 0, $(canvas2).attr("width"), $(canvas2).attr("height"));
+        });
+        $("#Save").on("click", function()
+        {
+            Send_data();
+            //alert("circle: " + diagramObj.circle[0].get_x0());
         });
       });
 }

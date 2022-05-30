@@ -5,6 +5,7 @@ from app.img_base64_convert import img_base64_convert as conveter
 from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
+from django.http import QueryDict
 
 def home(request):
     #return render(request, 'index.html')
@@ -45,3 +46,8 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'app/register.html', locals())
+
+def Save_canvas(request):
+    if request.method == 'POST':
+        print(request.POST.get('circle'))
+    return render(request, 'app/app.html')
