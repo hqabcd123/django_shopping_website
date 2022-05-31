@@ -29,3 +29,11 @@ https://qiita.com/shiranon/items/8182445975dff4cf19a6#react%E3%81%A8django%E3%81
 https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react#step-3-setting-up-the-frontend
 https://ithelp.ithome.com.tw/articles/10214942
 /********************************************************************/
+
+ajax-django connection
+/********************************************************************/
+https://testdriven.io/blog/django-ajax-xhr/
+https://stackoverflow.com/questions/13465711/how-do-i-post-with-jquery-ajax-in-django
+https://office54.net/python/django/django-ajax#section3-1
+https://blog.ikappio.com/post-on-ajax-also-add-csrf_token-with-django/
+/********************************************************************/

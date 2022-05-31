@@ -49,5 +49,7 @@ def register(request):
 
 def Save_canvas(request):
     if request.method == 'POST':
-        print(request.POST.get('circle'))
+        #data = json.loads(request.POST.get('line'))
+        data = json.loads(request.POST.get('circle'))
+        print(data)
     return render(request, 'app/app.html')

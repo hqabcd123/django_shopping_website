@@ -95,13 +95,18 @@ function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
+
 function Send_data()
 {
     var csrf_token = getCookie("csrftoken");
     $.ajax({
         method:"POST",
         url: "Save_canvas/",
-        data: diagramObj,
+        data: {
+            "line":JSON.stringify(diagramObj.line),
+            "circle":JSON.stringify(diagramObj.circle),
+            "rectengle":JSON.stringify(diagramObj.rectengle),
+        },
         datatype: "json",
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -110,7 +115,15 @@ function Send_data()
         },
         success: function(data){
             console.log("success");
-            console.log(data);
+            if (Object.keys(data).length == 0)
+            {
+                console.log("empty data set");
+            }
+            else
+            {
+                console.log("hello");
+                //console.log(data);
+            }
         },
         error: function(data){
             alert("error");
