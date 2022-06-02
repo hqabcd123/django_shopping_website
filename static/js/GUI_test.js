@@ -63,7 +63,27 @@ class circle
 
     clear_circle(ctx)
     {
-        ctx.clearRect(this.x0-this.r0-1, this.y0-this.r0-1, (this.r0*2)+2, (this.r0*2)+2);
+        /*************************************************************** */
+        var cut_size = 36;//base 36
+        var clean_size = (2*Math.PI*this.r0)/cut_size;
+        clean_size = clean_size/Math.sin(Math.PI/8);
+        var x = 0;
+        var r2 = Math.pow(this.r0, 2);
+        var remain = 1+(this.r0/264);//magic number 264
+        var offset = 10*remain;//magic number 10
+        for (x = 0; x <= this.r0; x += this.r0/cut_size)
+        {
+            var y = 0;
+            var temp = r2 - Math.pow(x, 2);
+            y = Math.sqrt(temp);
+            console.log("x: " + x + " y: " + y + " r: " + this.r0);
+            ctx.clearRect(this.x0-x-offset, this.y0-y-offset, clean_size, clean_size);
+            ctx.clearRect(this.x0+x-offset, this.y0-y-offset, clean_size, clean_size);
+            ctx.clearRect(this.x0-x-offset, this.y0+y-offset, clean_size, clean_size);
+            ctx.clearRect(this.x0+x-offset, this.y0+y-offset, clean_size, clean_size);
+        }
+        /*************************************************************** */
+        //ctx.clearRect(this.x0-this.r0-1, this.y0-this.r0-1, (this.r0*2)+2, (this.r0*2)+2);
         ctx.restore();
     }
 

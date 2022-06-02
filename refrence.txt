@@ -22,6 +22,12 @@ json data cant encode base64 because base64 is bytes type and json only can enco
 https://stackoverflow.com/questions/7421775/css-i-want-a-div-to-be-on-top-of-everything
 /********************************************************************/
 
+images process
+/********************************************************************/
+http://css3.bradshawenterprises.com/cfimg/
+https://www.w3schools.com/css/css3_images.asp
+/********************************************************************/
+
 
 react-django refrence
 /********************************************************************/
@@ -36,4 +42,5 @@ https://testdriven.io/blog/django-ajax-xhr/
 https://stackoverflow.com/questions/13465711/how-do-i-post-with-jquery-ajax-in-django
 https://office54.net/python/django/django-ajax#section3-1
 https://blog.ikappio.com/post-on-ajax-also-add-csrf_token-with-django/
+https://stackoverflow.com/questions/40977166/sending-an-array-to-django-via-ajax
 /********************************************************************/
