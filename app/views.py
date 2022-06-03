@@ -1,4 +1,6 @@
 from curses.textpad import rectangle
+from random import random
+import string
 from time import timezone
 from venv import create
 from django.shortcuts import render,HttpResponse
@@ -59,13 +61,22 @@ def Save_canvas(request):
     if not request.user.is_authenticated:
         return render(request, 'app/login.html')
     if request.method == 'POST':
-        username = request.user.username
-        #username = 'request.user.username'
-        line = json.loads(request.POST.get('line'))
-        circle = json.loads(request.POST.get('circle'))
-        rectangle = json.loads(request.POST.get('rectangle'))
-        offset = json.loads(request.POST.get('offset'))
-        img = request.FILES.get('img')
-        temp = diagram(username = username, line = line, circle = circle, rectangle = rectangle, offset = offset, saved_image = img)
-        temp.save()
+        print(request.POST.get('Json'))
+        if request.POST.get('Json') == '1':
+            print('true and print 1')
+            username = request.user.username
+            Save_code = 1#''.join(random.choices(string.ascii_uppercase + string.digits, k = S))    
+            line = json.loads(request.POST.get('line'))
+            circle = json.loads(request.POST.get('circle'))
+            rectangle = json.loads(request.POST.get('rectangle'))
+            offset = json.loads(request.POST.get('offset'))
+            temp = diagram(username = username, Save_code = str(Save_code), line = line,
+                circle = circle, rectangle = rectangle, offset = offset)
+            temp.save()
+        else:
+            print('true and print 2')
+            img = request.FILES.get('img')
+            temp = diagram(username = request.user.username, Save_code = str(2), saved_image = img)
+            temp.save()
+            #diagram.objects.filter(Save_code = 1).update(saved_image = img)
     return render(request, 'app/app.html')

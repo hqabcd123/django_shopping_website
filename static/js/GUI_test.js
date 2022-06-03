@@ -134,10 +134,10 @@ function converse_image(img)
     var file    = new File( [buffer.buffer], filename + ".png", { type: 'image/png' });
 
     data.append("img",file);
-    // for (let v of data.entries() )
-    // {
-    //     console.log(v);
-    // }
+    for (let v of data.entries() )
+    {
+        console.log(v);
+    }
     return data;
 }
 
@@ -153,6 +153,35 @@ function Send_data()
             "circle":JSON.stringify(diagramObj.circle),
             "rectangle":JSON.stringify(diagramObj.rectangle),
             "offset": JSON.stringify(diagramObj.offset),
+            "Json": 1,
+        },
+        // datatype: "json",
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        },
+        success: function(data){
+            console.log("success");
+            if (Object.keys(data).length == 0)
+            {
+                console.log("empty data set");
+            }
+            else
+            {
+                console.log("hello");
+                //console.log(data);
+            }
+        },
+        error: function(data){
+            alert("error");
+        },
+    });
+    $.ajax({
+        method:"POST",
+        url: "Save_canvas/",
+        processData: false,
+        data: {
             "img": img,
         },
         // datatype: "json",
