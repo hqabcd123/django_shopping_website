@@ -1,6 +1,10 @@
+from curses.textpad import rectangle
+from time import timezone
+from venv import create
 from django.shortcuts import render,HttpResponse
 import os, os.path
 import json
+from .models import diagram
 from app.img_base64_convert import img_base64_convert as conveter
 from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm
@@ -22,6 +26,9 @@ def GUI_test(request):
     print (Json_img_dir)
     #print ([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
     return render(request, 'app/GUI_test.html', locals())
+
+def userpage(request):
+    return render(request, 'app/userpage')
 
 def login(request):
     username = request.POST.get('username', '')
@@ -48,8 +55,14 @@ def register(request):
     return render(request, 'app/register.html', locals())
 
 def Save_canvas(request):
+    if not request.user.is_authenticated:
+        return render(request, 'app/login.html')
     if request.method == 'POST':
-        #data = json.loads(request.POST.get('line'))
-        data = json.loads(request.POST.get('circle'))
-        print(data)
+        username = request.user.username
+        #username = 'request.user.username'
+        line = json.loads(request.POST.get('line'))
+        circle = json.loads(request.POST.get('circle'))
+        rectangle = json.loads(request.POST.get('rectangle'))
+        temp = diagram(username = username, line = line, circle = circle, rectangle = rectangle)
+        temp.save()
     return render(request, 'app/app.html')

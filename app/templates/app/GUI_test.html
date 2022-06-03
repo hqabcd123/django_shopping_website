@@ -27,9 +27,15 @@
       
       <div class="collapse navbar-collapse" id="navbarNav2">
         <ul class="navbar-nav">
+          {% if request.user.is_authenticated %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'userpage' %}"> {{request.user}} <span class="sr-only">(current)</span></a>
+          </li>
+          {% else %}
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'login' %}">User login <span class="sr-only">(current)</span></a>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a id="nav_Canvas" class="nav-link" href="#">Canvas</a>
           </li>

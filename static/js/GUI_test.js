@@ -3,7 +3,7 @@ canvasObj = {};
 diagramObj = {
     line: [],
     circle: [],
-    rectengle: [],
+    rectangle: [],
 };
 
 /* 
@@ -125,7 +125,7 @@ function Send_data()
         data: {
             "line":JSON.stringify(diagramObj.line),
             "circle":JSON.stringify(diagramObj.circle),
-            "rectengle":JSON.stringify(diagramObj.rectengle),
+            "rectangle":JSON.stringify(diagramObj.rectangle),
         },
         datatype: "json",
         beforeSend: function(xhr, settings) {
