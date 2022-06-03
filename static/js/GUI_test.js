@@ -116,13 +116,35 @@ function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
+function converse_image(img)
+{
+    var data = new FormData();
+    img = img.toDataURL("image/png");
+    var bin     = atob(img.replace(/^.*,/, ''));
+    var buffer  = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++)
+    {
+        buffer[i] = bin.charCodeAt(i);
+    }
+
+    let dt          = new Date();
+    let filename    = dt.toLocaleString().replace(/\/| |:/g,"");
+
+    //バイナリでファイルを作る
+    var file    = new File( [buffer.buffer], filename + ".png", { type: 'image/png' });
+
+    data.append("img",file);
+    // for (let v of data.entries() )
+    // {
+    //     console.log(v);
+    // }
+    return data;
+}
 
 function Send_data()
 {
     var csrf_token = getCookie("csrftoken");
-    var img = $(canvasObj.canvas)[0].toDataURL();
-    console.log(img);
-    //window.location.href=image;
+    var img = converse_image($(canvasObj.canvas)[0]);
     $.ajax({
         method:"POST",
         url: "Save_canvas/",

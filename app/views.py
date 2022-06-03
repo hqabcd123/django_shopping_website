@@ -65,6 +65,7 @@ def Save_canvas(request):
         circle = json.loads(request.POST.get('circle'))
         rectangle = json.loads(request.POST.get('rectangle'))
         offset = json.loads(request.POST.get('offset'))
-        temp = diagram(username = username, line = line, circle = circle, rectangle = rectangle, offset = offset)
+        img = request.FILES.get('img')
+        temp = diagram(username = username, line = line, circle = circle, rectangle = rectangle, offset = offset, saved_image = img)
         temp.save()
     return render(request, 'app/app.html')
