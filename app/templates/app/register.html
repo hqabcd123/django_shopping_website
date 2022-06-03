@@ -13,7 +13,7 @@
     <title>Register</title>
   </head>
   <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+{% comment %} <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{% url 'GUI_test' %}">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2" 
     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,8 @@
         </li>
         </ul>
     </div>
-</nav>
+</nav> {% endcomment %}
+  {% include "app/navbar.html" %}
   
     <div class='login'>
         <h1>Register</h1>
