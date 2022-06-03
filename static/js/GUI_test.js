@@ -4,6 +4,7 @@ diagramObj = {
     line: [],
     circle: [],
     rectangle: [],
+    offset: null,
 };
 
 /* 
@@ -119,6 +120,7 @@ function csrfSafeMethod(method) {
 function Send_data()
 {
     var csrf_token = getCookie("csrftoken");
+
     $.ajax({
         method:"POST",
         url: "Save_canvas/",
@@ -126,6 +128,7 @@ function Send_data()
             "line":JSON.stringify(diagramObj.line),
             "circle":JSON.stringify(diagramObj.circle),
             "rectangle":JSON.stringify(diagramObj.rectangle),
+            "offset": diagramObj.offset
         },
         datatype: "json",
         beforeSend: function(xhr, settings) {
@@ -148,7 +151,7 @@ function Send_data()
         error: function(data){
             alert("error");
         },
-    })
+    });
 }
 
 
@@ -191,6 +194,7 @@ function Draw()
                     canvasObj.ctx.beginPath();
                     canvasObj.ctx.moveTo(X, Y);
                     point.push({X: X, Y: Y});
+                    diagramObj.offset = offset;
                     mousedown_check = true;
                     //return ;
                     break;
@@ -208,6 +212,7 @@ function Draw()
                         console.log(crl.x0 + " " + crl.y0 + " " + crl.r0);
                         draw_circle(canvasObj.ctx, crl);
                         diagramObj.circle.push(crl);
+                        diagramObj.offset = offset;
                         point = [];
                         mousedown_check = true;
                     }
@@ -268,10 +273,9 @@ function Draw()
                 {
                     case "line":
                         diagramObj.line.push(point);
-                        point = []
+                        point = [];
                         break;
                     case "circle":
-
                         break;
                     default:
                         break;

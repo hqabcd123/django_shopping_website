@@ -28,7 +28,8 @@ def GUI_test(request):
     return render(request, 'app/GUI_test.html', locals())
 
 def userpage(request):
-    return render(request, 'app/userpage')
+    data = diagram.objects.get(username = request.user.username)
+    return render(request, 'app/userpage', locals())
 
 def login(request):
     username = request.POST.get('username', '')
@@ -63,6 +64,7 @@ def Save_canvas(request):
         line = json.loads(request.POST.get('line'))
         circle = json.loads(request.POST.get('circle'))
         rectangle = json.loads(request.POST.get('rectangle'))
-        temp = diagram(username = username, line = line, circle = circle, rectangle = rectangle)
+        offset = request.POST.get('offset')
+        temp = diagram(username = username, line = line, circle = circle, rectangle = rectangle, offset = offset)
         temp.save()
     return render(request, 'app/app.html')
