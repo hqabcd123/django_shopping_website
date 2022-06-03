@@ -120,7 +120,9 @@ function csrfSafeMethod(method) {
 function Send_data()
 {
     var csrf_token = getCookie("csrftoken");
-
+    var img = $(canvasObj.canvas)[0].toDataURL();
+    console.log(img);
+    //window.location.href=image;
     $.ajax({
         method:"POST",
         url: "Save_canvas/",
@@ -128,9 +130,10 @@ function Send_data()
             "line":JSON.stringify(diagramObj.line),
             "circle":JSON.stringify(diagramObj.circle),
             "rectangle":JSON.stringify(diagramObj.rectangle),
-            "offset": diagramObj.offset
+            "offset": JSON.stringify(diagramObj.offset),
+            "img": img,
         },
-        datatype: "json",
+        // datatype: "json",
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                 xhr.setRequestHeader("X-CSRFToken", csrf_token);
