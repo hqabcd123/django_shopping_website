@@ -63,6 +63,8 @@ def Save_canvas(request):
     if request.method == 'POST':
         if request.POST.get('Json') == '1':
             print(request.content_type)
+            for key in request.POST:
+                print('key: ' + key)
             username = request.user.username
             Save_code = 1#''.join(random.choices(string.ascii_uppercase + string.digits, k = S))    
             line = json.loads(request.POST.get('line'))
@@ -73,10 +75,18 @@ def Save_canvas(request):
                 circle = circle, rectangle = rectangle, offset = offset)
             temp.save()
         else:
-            print(request.content_type)
-            img = request.POST.get('img')
+            print('Type is : ' + request.content_type)
+            img = request.FILES.get('txt')
             print(img)
+            ########################################
+            for key in request.POST:
+                print('key: ' + key)
+            # f = open(img)
+            # text = f.read()
+            # print(text)
+            # f.close()
+            ########################################
             temp = diagram(username = request.user.username, Save_code = str(2), saved_image = img)
-            temp.save()
+            #temp.save()
             #diagram.objects.filter(Save_code = 1).update(saved_image = img)
     return render(request, 'app/app.html')

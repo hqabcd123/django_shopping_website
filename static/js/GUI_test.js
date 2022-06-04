@@ -121,13 +121,14 @@ function converse_image(img)
     img = img.toDataURL("image/png");
     var bin     = atob(img.replace(/^.*,/, ''));
     var buffer  = new Uint8Array(bin.length);
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     for (var i = 0; i < bin.length; i++)
     {
         buffer[i] = bin.charCodeAt(i);
     }
 
     let dt          = new Date();
-    let filename    = dt.toLocaleString().replace(/\/| |:/g,"");
+    let filename    = dt.toLocaleString('de-DE', options).replace(/\/| |:/g,"");
 
     //バイナリでファイルを作る
     var file = new File( [buffer.buffer], filename + ".png", { type: 'image/png' });
@@ -136,10 +137,28 @@ function converse_image(img)
     return data;
 }
 
+function get_txt_file()
+{
+    console.log("inside txt function");
+    var file = new File(["dwidjapfjafjas"], "foo.txt", {type: "text/plain",});
+    var fr = new FileReader();
+    console.log(file.name);
+    fr.onload = function(){
+        if(fr.error) return;
+        console.log(this.result);
+    }
+    fr.readAsDataURL(file);
+    var data = new FormData();
+    data.append("txt", file);
+    return data;
+}
+
 function Send_data()
 {
     var csrf_token = getCookie("csrftoken");
     var img = converse_image($(canvasObj.canvas)[0]);
+    var txt = get_txt_file();
+    console.log(txt.getAll("txt"));
     // var a = document.createElement("a");
     // a.download = "download imgae";
     // a.href = window.URL.createObjectURL(img)
@@ -164,13 +183,14 @@ function Send_data()
             $.ajax({
                 method:"POST",
                 url: "Save_canvas/",
-                enctype: 'multipart/form-data',
+                contentType: 'multipart/form-data',
                 processData: false,
-                contentType: false,
-                // "enctype": "multipart/form-data",
+                // contentType: false,
+                enctype: "multipart/form-data",
 
                 data: {
                     "img": img,
+                    "txt": txt,
                 },
                 // datatype: "json",
                 beforeSend: function(xhr, settings) {
