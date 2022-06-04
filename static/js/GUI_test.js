@@ -166,13 +166,12 @@ function Send_data()
     $.ajax({
         method:"POST",
         url: "Save_canvas/",
-        data: {
-            "line":JSON.stringify(diagramObj.line),
-            "circle":JSON.stringify(diagramObj.circle),
-            "rectangle":JSON.stringify(diagramObj.rectangle),
-            "offset": JSON.stringify(diagramObj.offset),
-            "Json": 1,
-        },
+        //contentType: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        enctype: "multipart/form-data",
+
+        data: img,
         // datatype: "json",
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -183,15 +182,14 @@ function Send_data()
             $.ajax({
                 method:"POST",
                 url: "Save_canvas/",
-                contentType: 'multipart/form-data',
-                processData: false,
-                // contentType: false,
-                enctype: "multipart/form-data",
-
                 data: {
-                    "img": img,
-                    "txt": txt,
+                    "line":JSON.stringify(diagramObj.line),
+                    "circle":JSON.stringify(diagramObj.circle),
+                    "rectangle":JSON.stringify(diagramObj.rectangle),
+                    "offset": JSON.stringify(diagramObj.offset),
+                    "Json": 1,
                 },
+                
                 // datatype: "json",
                 beforeSend: function(xhr, settings) {
                     if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
