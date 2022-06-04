@@ -61,9 +61,8 @@ def Save_canvas(request):
     if not request.user.is_authenticated:
         return render(request, 'app/login.html')
     if request.method == 'POST':
-        print(request.POST.get('Json'))
         if request.POST.get('Json') == '1':
-            print('true and print 1')
+            print(request.content_type)
             username = request.user.username
             Save_code = 1#''.join(random.choices(string.ascii_uppercase + string.digits, k = S))    
             line = json.loads(request.POST.get('line'))
@@ -74,8 +73,9 @@ def Save_canvas(request):
                 circle = circle, rectangle = rectangle, offset = offset)
             temp.save()
         else:
-            print('true and print 2')
-            img = request.FILES.get('img')
+            print(request.content_type)
+            img = request.POST.get('img')
+            print(img)
             temp = diagram(username = request.user.username, Save_code = str(2), saved_image = img)
             temp.save()
             #diagram.objects.filter(Save_code = 1).update(saved_image = img)

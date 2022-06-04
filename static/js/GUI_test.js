@@ -118,7 +118,6 @@ function csrfSafeMethod(method) {
 
 function converse_image(img)
 {
-    var data = new FormData();
     img = img.toDataURL("image/png");
     var bin     = atob(img.replace(/^.*,/, ''));
     var buffer  = new Uint8Array(bin.length);
@@ -131,13 +130,9 @@ function converse_image(img)
     let filename    = dt.toLocaleString().replace(/\/| |:/g,"");
 
     //バイナリでファイルを作る
-    var file    = new File( [buffer.buffer], filename + ".png", { type: 'image/png' });
-
-    data.append("img",file);
-    for (let v of data.entries() )
-    {
-        console.log(v);
-    }
+    var file = new File( [buffer.buffer], filename + ".png", { type: 'image/png' });
+    var data = new FormData();
+    data.append("img", file);
     return data;
 }
 
@@ -145,6 +140,10 @@ function Send_data()
 {
     var csrf_token = getCookie("csrftoken");
     var img = converse_image($(canvasObj.canvas)[0]);
+    // var a = document.createElement("a");
+    // a.download = "download imgae";
+    // a.href = window.URL.createObjectURL(img)
+    // a.click();
     $.ajax({
         method:"POST",
         url: "Save_canvas/",
@@ -162,50 +161,45 @@ function Send_data()
             }
         },
         success: function(data){
-            console.log("success");
-            if (Object.keys(data).length == 0)
-            {
-                console.log("empty data set");
-            }
-            else
-            {
-                console.log("hello");
-                //console.log(data);
-            }
+            $.ajax({
+                method:"POST",
+                url: "Save_canvas/",
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                // "enctype": "multipart/form-data",
+
+                data: {
+                    "img": img,
+                },
+                // datatype: "json",
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                    }
+                },
+                success: function(data){
+                    console.log("success");
+                    if (Object.keys(data).length == 0)
+                    {
+                        console.log("empty data set");
+                    }
+                    else
+                    {
+                        console.log("hello");
+                        //console.log(data);
+                    }
+                },
+                error: function(data){
+                    alert("error2");
+                },
+            });
         },
         error: function(data){
-            alert("error");
+            alert("error1");
         },
     });
-    $.ajax({
-        method:"POST",
-        url: "Save_canvas/",
-        processData: false,
-        data: {
-            "img": img,
-        },
-        // datatype: "json",
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrf_token);
-            }
-        },
-        success: function(data){
-            console.log("success");
-            if (Object.keys(data).length == 0)
-            {
-                console.log("empty data set");
-            }
-            else
-            {
-                console.log("hello");
-                //console.log(data);
-            }
-        },
-        error: function(data){
-            alert("error");
-        },
-    });
+    
 }
 
 
