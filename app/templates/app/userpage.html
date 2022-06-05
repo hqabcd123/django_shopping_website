@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load static %}
+{% include "app/bootstrap.html" %}
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -6,12 +8,12 @@
   </head>
   <body>
     {% include "app/navbar.html" %}
-    <div class='container'>
-      <h1>HOME</h1>
-      <h2>Hello World!</h2>
-      {% comment %} <form action="/app/GUI_test/"method="post">{% csrf_token %}
-        <input type="submit"value="Get in to GUI page">
-      </form> {% endcomment %}
+    <div>
+      {% for data in Data_form %}
+        <p>Saved canvas: {{data.Save_code}}</p>
+        <br/>
+        <div><img src="{{data.saved_image}}"></img></div>
+      {% endfor %}
     </div>
   </body>
 </html>

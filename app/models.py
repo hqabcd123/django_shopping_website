@@ -11,7 +11,7 @@ class diagram(models.Model):
     circle = models.TextField()
     rectangle = models.TextField()
     offset = models.TextField()
-    saved_image = models.ImageField(upload_to='upload')
-
+    saved_image = models.ImageField(upload_to='upload/')
+    
     def __str__(self):
-        return 'username: ' + self.username
+        return 'username: ' + self.username + ' Save_code: ' + self.Save_code

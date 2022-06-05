@@ -1,9 +1,10 @@
 from curses.textpad import rectangle
-from random import random
+import random
 import string
 from time import timezone
 from venv import create
 from django.shortcuts import render,HttpResponse
+from django.http.response import JsonResponse
 import os, os.path
 import json
 from .models import diagram
@@ -17,6 +18,8 @@ def home(request):
     #return render(request, 'index.html')
     return render(request, 'app/app.html')
 
+
+#get in GUI_TEST.html and get all image we want at images looping
 def GUI_test(request):
     current_path = os.path.dirname(__file__)
     DIR = '..\Media'
@@ -29,10 +32,16 @@ def GUI_test(request):
     #print ([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
     return render(request, 'app/GUI_test.html', locals())
 
+#get in User setting and canvas saving page
 def userpage(request):
     data = diagram.objects.get(username = request.user.username)
-    return render(request, 'app/userpage', locals())
+    print(data)
+    Data_form = {"Data_form": data}
+    print(Data_form)
+    return render(request, 'app/userpage.html', locals())
 
+
+#get in Login
 def login(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
@@ -62,35 +71,40 @@ def Save_canvas(request):
         return render(request, 'app/login.html')
     if request.method == 'POST':
         if request.POST.get('Json') == '1':
+            Json = {}#create empty Json var to pass the Jsonresponse
             print(request.content_type)
             print(request.POST)
             for key in request.POST:
                 print('key: ' + key)
+            
+            ############################################
+            #getting data
             username = request.user.username
-            Save_code = 1#''.join(random.choices(string.ascii_uppercase + string.digits, k = S))    
+            Save_code = request.POST.get('Save_code')#''.join(random.choices(string.ascii_uppercase + string.digits, k = S))    
             line = json.loads(request.POST.get('line'))
             circle = json.loads(request.POST.get('circle'))
             rectangle = json.loads(request.POST.get('rectangle'))
             offset = json.loads(request.POST.get('offset'))
+            ############################################
+
+
             # temp = diagram(username = username, Save_code = str(Save_code), line = line,
             #     circle = circle, rectangle = rectangle, offset = offset)
             # temp.save()
-            diagram.objects.filter(Save_code = 2).update(username = username, line = line,
+            
+            #update model data
+            diagram.objects.filter(Save_code = Save_code).update(username = username, line = line,
                  circle = circle, rectangle = rectangle, offset = offset)
         else:
             print('Type is : ' + request.content_type)
             img = request.FILES.get('img')
+            N = 7# lenght of string genarator
             print(img)
             print(request.FILES)
-            ########################################
-            # for key in request.FILES:
-            #     print('key: ' + key)
-            # f = open(img)
-            # text = f.read()
-            # print(text)
-            # f.close()
-            ########################################
-            temp = diagram(username = request.user.username, Save_code = str(2), saved_image = img)
+            Save_code = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
+            print(Save_code)
+            Json = {'Save_code': Save_code}
+            temp = diagram(username = request.user.username, Save_code = Save_code, saved_image = img)
             temp.save()
             #diagram.objects.filter(Save_code = 1).update(saved_image = img)
-    return render(request, 'app/app.html')
+    return JsonResponse(Json)

@@ -127,8 +127,8 @@ function converse_image(img)
         buffer[i] = bin.charCodeAt(i);
     }
 
-    let dt          = new Date();
-    let filename    = dt.toLocaleString('de-DE', options).replace(/\/| |:/g,"");
+    var dt          = new Date();
+    var filename    = dt.toLocaleString('de-DE', options).replace(/\/| |:/g,"");
 
     //バイナリでファイルを作る
     var file = new File( [buffer.buffer], filename + ".png", { type: 'image/png' });
@@ -137,32 +137,10 @@ function converse_image(img)
     return data;
 }
 
-function get_txt_file()
-{
-    console.log("inside txt function");
-    var file = new File(["dwidjapfjafjas"], "foo.txt", {type: "text/plain",});
-    var fr = new FileReader();
-    console.log(file.name);
-    fr.onload = function(){
-        if(fr.error) return;
-        console.log(this.result);
-    }
-    fr.readAsDataURL(file);
-    var data = new FormData();
-    data.append("txt", file);
-    return data;
-}
-
 function Send_data()
 {
     var csrf_token = getCookie("csrftoken");
     var img = converse_image($(canvasObj.canvas)[0]);
-    var txt = get_txt_file();
-    console.log(txt.getAll("txt"));
-    // var a = document.createElement("a");
-    // a.download = "download imgae";
-    // a.href = window.URL.createObjectURL(img)
-    // a.click();
     $.ajax({
         method:"POST",
         url: "Save_canvas/",
@@ -179,6 +157,8 @@ function Send_data()
             }
         },
         success: function(data){
+            console.log("Save code: " + data["Save_code"]);
+            var Save_code = data["Save_code"]
             $.ajax({
                 method:"POST",
                 url: "Save_canvas/",
@@ -187,6 +167,7 @@ function Send_data()
                     "circle":JSON.stringify(diagramObj.circle),
                     "rectangle":JSON.stringify(diagramObj.rectangle),
                     "offset": JSON.stringify(diagramObj.offset),
+                    "Save_code": Save_code,
                     "Json": 1,
                 },
                 
