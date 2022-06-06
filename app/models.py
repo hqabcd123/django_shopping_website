@@ -12,6 +12,16 @@ class diagram(models.Model):
     rectangle = models.TextField()
     offset = models.TextField()
     saved_image = models.ImageField(upload_to='upload/')
+
+    def get_all_data(self):#get all data but date and image because those can not converse to JSON data type
+        dict = {
+            'username': self.username,
+            'Save_code': self.Save_code,
+            'line': self.line,
+            'circle': self.circle,
+            'rectangle': self.rectangle,
+            'offset': self.offset,}
+        return dict
     
     def __str__(self):
         return 'username: ' + self.username + ' Save_code: ' + self.Save_code

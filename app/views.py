@@ -30,16 +30,28 @@ def GUI_test(request):
     Json_img_dir = json.dumps(img_dir)
     print (Json_img_dir)
     #print ([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
-    return render(request, 'app/GUI_test.html', locals())
+
+    if request.method == 'GET':
+        return render(request, 'app/GUI_test.html', locals())
+    elif request.method == 'POST':
+        save_code = request.POST.get('save_code')
+        data = diagram.objects.get(Save_code = save_code)
+        # Data_form.append({'Save_code': data.Save_code, 'saved_image': data.saved_image})
+        Data_form = data.get_all_data()
+        print(Data_form)
+        Data_form = json.dumps(Data_form)
+        return render(request, 'app/GUI_test.html', locals())
 
 #get in User setting and canvas saving page
 def userpage(request):
     Data_form = []
+    username = request.user.username
     data = diagram.objects.all()
     #data = list(data)
     print(data)
     for cell in data:
-        Data_form.append({'username': cell.username, 'Save_code': cell.Save_code, 'saved_image': cell.saved_image})
+        if cell.username == username:
+            Data_form.append({'Save_code': cell.Save_code, 'saved_image': cell.saved_image})
     print(Data_form)
     return render(request, 'app/userpage.html', locals())
 
@@ -111,3 +123,4 @@ def Save_canvas(request):
             temp.save()
             #diagram.objects.filter(Save_code = 1).update(saved_image = img)
     return JsonResponse(Json)
+

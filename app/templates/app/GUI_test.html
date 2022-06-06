@@ -104,6 +104,8 @@
     </div>
 
     <script type="text/javascript">
+      var data = {% autoescape off %}{{Data_form}}{% endautoescape %};
+      console.log("data: " + data["offset"]);
       canvas_main();
     </script>
     

@@ -9,11 +9,13 @@
   <body>
     {% include "app/navbar.html" %}
     <div>
-      <a>{{Data_form}}</a>
       {% for data in Data_form %}
-        <p>Saved canvas: {{data.Save_code}}</p>
-        <br/>
-        <div><img src="{{data.saved_image.url}}"></img></div>
+        <form action=" {%url 'GUI_test'%} " method="post" id="form">{% csrf_token %}
+          <a>Saved canvas: </a><a href="JavaScript:;" onclick="document.getElementById('form').submit();">{{data.Save_code}}</a>
+          <input type="hidden" name="save_code" value="{{data.Save_code}}"/>
+          <br/>
+          <div><img src="{{data.saved_image.url}}"></img></div>
+        </form>
       {% endfor %}
     </div>
   </body>
