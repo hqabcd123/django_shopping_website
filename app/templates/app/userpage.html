@@ -9,10 +9,11 @@
   <body>
     {% include "app/navbar.html" %}
     <div>
+      <a>{{Data_form}}</a>
       {% for data in Data_form %}
         <p>Saved canvas: {{data.Save_code}}</p>
         <br/>
-        <div><img src="{{data.saved_image}}"></img></div>
+        <div><img src="{{data.saved_image.url}}"></img></div>
       {% endfor %}
     </div>
   </body>

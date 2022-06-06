@@ -34,9 +34,12 @@ def GUI_test(request):
 
 #get in User setting and canvas saving page
 def userpage(request):
-    data = diagram.objects.get(username = request.user.username)
+    Data_form = []
+    data = diagram.objects.all()
+    #data = list(data)
     print(data)
-    Data_form = {"Data_form": data}
+    for cell in data:
+        Data_form.append({'username': cell.username, 'Save_code': cell.Save_code, 'saved_image': cell.saved_image})
     print(Data_form)
     return render(request, 'app/userpage.html', locals())
 
