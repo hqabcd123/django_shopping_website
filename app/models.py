@@ -11,14 +11,14 @@ class discuss_borad:
     post_date = models.DateTimeField(default=datetime.datetime.now(), help_text='create date: ')
     command = models.TextField()
 
-    def __str__(self) :
+    def __str__(self) -> str:
         return self.username + self.command
 
 class Image_import(models.Model):
     Process_type = models.TextField()
     Image = models.ImageField(upload_to = 'Pre-Image')
 
-    def __str__(self):
+    def __str__(self) -> str:
         str = 'import image path: '
         return str + self.Image
         
@@ -34,7 +34,7 @@ class diagram(models.Model):
     offset = models.TextField()
     saved_image = models.ImageField(upload_to='upload/')
 
-    def get_all_data(self):
+    def get_all_data(self) -> dict:
         #get all data but date and image because those can not converse to JSON data type
         dict = {
             'username': self.username,
@@ -45,5 +45,5 @@ class diagram(models.Model):
             'offset': self.offset,}
         return dict
     
-    def __str__(self):
+    def __str__(self) -> str:
         return 'username: ' + self.username + ' Save_code: ' + self.Save_code

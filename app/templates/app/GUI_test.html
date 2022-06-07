@@ -106,7 +106,7 @@
     <script type="text/javascript">
       var data = {% autoescape off %}{{Data_form}}{% endautoescape %};
       console.log("data: " + data["offset"]);
-      canvas_main();
+      canvas_main(data);
     </script>
     
     <div class='container'>
@@ -116,7 +116,7 @@
       </div>
 
       <br>
-      <div id="GUI_window">
+      {% comment %} <div id="GUI_window">
         <canvas class="canvas_test"></canvas>
       </div>
       <p>mouse location is: <spam id="spam_mouse_location"></spam></p>
@@ -127,7 +127,7 @@
         canvas.attr("width", 1000);
         canvas.attr("height", 1000);
         Draw(canvas, ctx);
-      </script>
+      </script> {% endcomment %}
       
       <script type="text/javascript">
         //console.log("{{Json_img_dir}}")

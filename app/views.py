@@ -32,6 +32,8 @@ def GUI_test(request):
     #print ([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
 
     if request.method == 'GET':
+        Data_form = {}
+        Data_form = json.dumps(Data_form)
         return render(request, 'app/GUI_test.html', locals())
     elif request.method == 'POST':
         save_code = request.POST.get('save_code')
