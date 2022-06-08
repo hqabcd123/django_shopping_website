@@ -1,8 +1,8 @@
 canvasObj = {};
 
 diagramObj = {
-    line: [],
-    circle: [],
+    line: [],//list of XY objects
+    circle: [],//list of circle object
     rectangle: [],
     offset: null,
 };
@@ -11,19 +11,6 @@ diagramObj = {
 clearrect can't clean all circle
 is the thickness's problem or is something wrong at the clip or clearrect
  */
-
-class diagram {
-    constructor(g)
-    {
-        //
-    }
-    get_center(point)
-    {
-        var X = point.X;
-        var Y = point.Y;
-        console.log("X: " + X + ", Y: " + Y);
-    }
-}
 
 class circle
 {
@@ -77,7 +64,7 @@ class circle
             var y = 0;
             var temp = r2 - Math.pow(x, 2);
             y = Math.sqrt(temp);
-            console.log("x: " + x + " y: " + y + " r: " + this.r0);
+            //console.log("x: " + x + " y: " + y + " r: " + this.r0);
             ctx.clearRect(this.x0-x-offset, this.y0-y-offset, clean_size, clean_size);
             ctx.clearRect(this.x0+x-offset, this.y0-y-offset, clean_size, clean_size);
             ctx.clearRect(this.x0-x-offset, this.y0+y-offset, clean_size, clean_size);
@@ -216,6 +203,37 @@ function draw_circle(ctx, crl)
     ctx.stroke();
 }
 
+function draw_line()
+{
+    var ctx = canvasObj.ctx;
+    var lineObj = diagramObj.line;
+    for (var i = 0; i < lineObj.length; i++)
+    {
+        var point = lineObj[i];
+        for (var j = 0; j < point.length - 1; j++)//final step is arr lenght - 1
+        {
+            var start = point[j];
+            var end = point[j + 1];
+            ctx.beginPath();
+            ctx.moveTo(start.X, start.Y);
+            ctx.lineTo(end.X, end.Y);
+            ctx.stroke();
+        }
+    }
+}
+
+function draw_saved_diagram(saved_draw_data)
+{
+    var ctx = canvasObj.ctx;
+    var point = eval(saved_draw_data.circle);
+    console.log(point);
+    for (var i = 0; i < point.length; i++)
+    {
+        var crl = new circle([point[i].first_point, point[i].second_point, point[i].final_point]);
+        draw_circle(ctx, crl);
+    }
+}
+
 function Draw(saved_draw_data)
 {
     var mousedown_check = false;
@@ -230,7 +248,7 @@ function Draw(saved_draw_data)
         if (Object.keys(saved_draw_data).length != 0)
         {
             console.log(saved_draw_data);
-            
+            draw_saved_diagram(saved_draw_data);
         }
         canvasObj.canvas.mousedown(function(e)
         {
@@ -299,14 +317,24 @@ function Draw(saved_draw_data)
                     case "circle":
                         if (count == 3)
                         {
+                            //clean canvas and draw the circle again
+                            /************************************************************** */
                             var i = diagramObj.circle.length-1;
                             X = (e.clientX - offset.left) + window.pageXOffset;
                             Y = (e.clientY - offset.top) + window.pageYOffset;
                             diagramObj.circle[i].clear_circle(canvasObj.ctx);
                             diagramObj.circle[i].set_final_point({X: X, Y: Y});
                             draw_circle(canvasObj.ctx, diagramObj.circle[i]);
+                            /************************************************************** */
+                            draw_line();
+                            //draw circle which have been clean
+                            /************************************************************** */
+                            for (var i = 0; i < diagramObj.circle.length - 1; i++)
+                            {
+                                draw_circle(canvasObj.ctx, diagramObj.circle[i]);
+                            }
+                            /************************************************************** */
                         }
-                        else console.log("not = 3");
                         break;
                     case "delete":
                         X = (e.clientX - offset.left) + window.pageXOffset;
@@ -333,7 +361,18 @@ function Draw(saved_draw_data)
                         break;
                 }
             mousedown_check = false;
-            if (count == 3) count = 0;
+            draw_line();
+            //draw circle which have been clean
+            /************************************************************** */
+            for (var i = 0; i < diagramObj.circle.length - 1; i++)
+            {
+                draw_circle(canvasObj.ctx, diagramObj.circle[i]);
+            }
+            /************************************************************** */
+            if (count == 3)
+            {
+                count = 0;
+            }
             return ;
         });
     });

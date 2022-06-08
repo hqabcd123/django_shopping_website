@@ -41,7 +41,7 @@ def GUI_test(request):
         # Data_form.append({'Save_code': data.Save_code, 'saved_image': data.saved_image})
         Data_form = data.get_all_data()
         print(Data_form)
-        Data_form = json.dumps(Data_form)
+        #Data_form = json.dumps(Data_form)
         return render(request, 'app/GUI_test.html', locals())
 
 #get in User setting and canvas saving page
