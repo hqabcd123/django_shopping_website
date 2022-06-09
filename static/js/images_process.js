@@ -10,7 +10,7 @@ async function images_loop(Json_img_dir)
     
     for (i = 0; i < Json_img_dir.length; i++)
     {
-        var str = "/Media/";
+        var str = ""//"/Media/";
         // console.log("len: " + Json_img_dir.length);
         // console.log("i: " + i + " " + str + Json_img_dir[i]);
         //await new Promise(resolve => setTimeout(resolve, delay_in_seconds));

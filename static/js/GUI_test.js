@@ -203,10 +203,11 @@ function draw_circle(ctx, crl)
     ctx.stroke();
 }
 
-function draw_line()
+function draw_line(canvasObj, diagramObj)
 {
     var ctx = canvasObj.ctx;
     var lineObj = diagramObj.line;
+    if (typeof lineObj == "string") lineObj = eval(lineObj);
     for (var i = 0; i < lineObj.length; i++)
     {
         var point = lineObj[i];
@@ -226,12 +227,13 @@ function draw_saved_diagram(saved_draw_data)
 {
     var ctx = canvasObj.ctx;
     var point = eval(saved_draw_data.circle);
-    console.log(point);
     for (var i = 0; i < point.length; i++)
     {
         var crl = new circle([point[i].first_point, point[i].second_point, point[i].final_point]);
         draw_circle(ctx, crl);
     }
+    draw_line(canvasObj, saved_draw_data);
+    
 }
 
 function Draw(saved_draw_data)
@@ -247,7 +249,6 @@ function Draw(saved_draw_data)
     {
         if (Object.keys(saved_draw_data).length != 0)
         {
-            console.log(saved_draw_data);
             draw_saved_diagram(saved_draw_data);
         }
         canvasObj.canvas.mousedown(function(e)
@@ -326,7 +327,7 @@ function Draw(saved_draw_data)
                             diagramObj.circle[i].set_final_point({X: X, Y: Y});
                             draw_circle(canvasObj.ctx, diagramObj.circle[i]);
                             /************************************************************** */
-                            draw_line();
+                            draw_line(canvasObj, diagramObj);
                             //draw circle which have been clean
                             /************************************************************** */
                             for (var i = 0; i < diagramObj.circle.length - 1; i++)
@@ -361,7 +362,7 @@ function Draw(saved_draw_data)
                         break;
                 }
             mousedown_check = false;
-            draw_line();
+            draw_line(canvasObj, diagramObj);
             //draw circle which have been clean
             /************************************************************** */
             for (var i = 0; i < diagramObj.circle.length - 1; i++)

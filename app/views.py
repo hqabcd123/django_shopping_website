@@ -7,7 +7,7 @@ from django.shortcuts import render,HttpResponse
 from django.http.response import JsonResponse
 import os, os.path
 import json
-from .models import diagram
+from .models import *
 from app.img_base64_convert import img_base64_convert as conveter
 from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm
@@ -21,14 +21,21 @@ def home(request):
 
 #get in GUI_TEST.html and get all image we want at images looping
 def GUI_test(request):
-    current_path = os.path.dirname(__file__)
-    DIR = '..\Media'
-    DIR = os.path.join(current_path, DIR)
-    print (DIR)
-    img_dir = [name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))]
-    print (img_dir)
-    Json_img_dir = json.dumps(img_dir)
-    print (Json_img_dir)
+    # current_path = os.path.dirname(__file__)
+    data_form = []
+    # DIR = '..\Media'
+    # DIR = os.path.join(current_path, DIR)
+    # print (DIR)
+    # img_dir = [name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))]
+    # print (img_dir)
+    # Json_img_dir = json.dumps(img_dir)
+    temp = Image_import.objects.all()
+    temp = temp.filter(Process_type = '1')
+    for data in temp:
+        if data.Process_type == '1':
+            data_form.append(data.Image.url)
+            print(data.Image.url)
+    print (data_form)
     #print ([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
 
     if request.method == 'GET':
@@ -40,7 +47,6 @@ def GUI_test(request):
         data = diagram.objects.get(Save_code = save_code)
         # Data_form.append({'Save_code': data.Save_code, 'saved_image': data.saved_image})
         Data_form = data.get_all_data()
-        print(Data_form)
         #Data_form = json.dumps(Data_form)
         return render(request, 'app/GUI_test.html', locals())
 

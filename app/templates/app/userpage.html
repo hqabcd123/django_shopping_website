@@ -10,8 +10,8 @@
     {% include "app/navbar.html" %}
     <div>
       {% for data in Data_form %}
-        <form action=" {%url 'GUI_test'%} " method="post" id="form">{% csrf_token %}
-          <a>Saved canvas: </a><a href="JavaScript:;" onclick="document.getElementById('form').submit();">{{data.Save_code}}</a>
+        <form action=" {%url 'GUI_test'%} " method="post" id="form{{forloop.counter0}}">{% csrf_token %}
+          <a>Saved canvas: </a><a href="JavaScript:;" onclick="document.getElementById('form{{forloop.counter0}}').submit();">{{data.Save_code}}</a>
           <input type="hidden" name="save_code" value="{{data.Save_code}}"/>
           <br/>
           <div><img src="{{data.saved_image.url}}"></img></div>

@@ -131,7 +131,7 @@
       
       <script type="text/javascript">
         //console.log("{{Json_img_dir}}")
-        var Json_img = {% autoescape off %}{{Json_img_dir}}{% endautoescape %}
+        var Json_img = {% autoescape off %}{{data_form}}{% endautoescape %}
         $(document).ready(function ()
         {
           images_loop(Json_img);
