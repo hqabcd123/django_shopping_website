@@ -48,6 +48,11 @@ class product_borad(models.Model):#Whole product's big picture
     def __str__(self) -> str:
         return self.User_command.username + ': ' + self.User_command.command
 
+    class Meta:
+        permission = (
+            ('can_add', 'add'),
+        )
+
 #------------------------------product page models space---------------------------------------------#
 
 class image_album(models.Model):

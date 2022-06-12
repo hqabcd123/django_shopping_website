@@ -8,6 +8,9 @@
   </head>
   <body>
     {% include "app/navbar.html" %}
+    {% if perms.product_borad.can_add %}
+      <p href="{% url 'add_product' %}">Click here to add product</p>
+    {% endif %}
     <div>
       {% for data in Data_form %}
         <form action=" {%url 'GUI_test'%} " method="post" id="form{{forloop.counter0}}">{% csrf_token %}

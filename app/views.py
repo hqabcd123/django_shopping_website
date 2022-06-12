@@ -141,4 +141,4 @@ def product_page(request):
             'Product_image': cell.Product_image.Prodcut_image,
         })
     print(Data_form)
-    return render(request, 'app/product_listup_page.html', locals())
+    return render(request, 'app/product/product_listup_page.html', locals())
