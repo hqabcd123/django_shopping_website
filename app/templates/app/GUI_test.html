@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 {% load static %}
-{% load bootstrap4 %}
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+{% include "app/bootstrap.html" %}
 <html lang="en">
   <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link href={%static "./css/styles.css" %} rel="stylesheet" text="text/css" >
+    <link href={%static "./css/Image_styles.css" %} rel="stylesheet" text="text/css" >
     <link href={%static "./css/canvas_styles.css" %} rel="stylesheet" text="text/css" >
     <script type="text/javascript" src={% static "./js/images_process.js" %}></script>
     <script type="text/javascript" src={% static "./js/GUI_test.js" %}></script>

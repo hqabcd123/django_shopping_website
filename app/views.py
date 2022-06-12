@@ -132,3 +132,13 @@ def Save_canvas(request):
             #diagram.objects.filter(Save_code = 1).update(saved_image = img)
     return JsonResponse(Json)
 
+def product_page(request):
+    Data_form = []
+    data = product_borad.objects.all()
+    for cell in data:
+        Data_form.append({
+            'product_name': cell.product_name,
+            'Product_image': cell.Product_image.Prodcut_image,
+        })
+    print(Data_form)
+    return render(request, 'app/product_listup_page.html', locals())

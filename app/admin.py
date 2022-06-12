@@ -5,3 +5,7 @@ from .models import *
 admin.site.register(diagram)
 admin.site.register(Image_import)
 admin.site.register(image_album)
+admin.site.register(product_borad)
+admin.site.register(discuss_borad)
+admin.site.register(product_image)
+admin.site.register(product_images_album)

@@ -1,0 +1,27 @@
+{% load static %}
+{% include "app/bootstrap.html" %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link href={%static "./css/product_page_styles.css" %} rel="stylesheet" text="text/css" >
+    <title>Product</title>
+  </head>
+  <body>
+    {% include "app/navbar.html" %}
+    <div>
+      <p>List product: </p>
+      {% for data in Data_form %}
+      <img class="product_image" src="{{data.Product_image.url}}"></img>
+      <p>{{data.product_name}}</p>
+        {% comment %} 
+        <form action=" {%url 'GUI_test'%} " method="post" id="form{{forloop.counter0}}">{% csrf_token %}
+          <a>Saved canvas: </a><a href="JavaScript:;" onclick="document.getElementById('form{{forloop.counter0}}').submit();">{{data.Save_code}}</a>
+          <input type="hidden" name="save_code" value="{{data.Save_code}}"/>
+          <br/>
+          <div><img src="{{data.saved_image.url}}"></img></div> 
+          {% endcomment %}
+        </form>
+      {% endfor %}
+    </div>
+  </body>
+</html>
