@@ -1,8 +1,10 @@
 from distutils.command.upload import upload
 from email.policy import default
+from pyexpat import model
 from re import M
 from turtle import width
 from django.db import models
+from django.forms import ModelForm
 import datetime
 
 
@@ -49,9 +51,14 @@ class product_borad(models.Model):#Whole product's big picture
         return self.User_command.username + ': ' + self.User_command.command
 
     class Meta:
-        permission = (
+        permissions = (
             ('can_add', 'add'),
         )
+
+class add_product_model_form(ModelForm):
+    class Meta():
+        model = product_borad
+        fields = '__all__'
 
 #------------------------------product page models space---------------------------------------------#
 

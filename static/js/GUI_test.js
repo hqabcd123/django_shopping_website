@@ -165,15 +165,14 @@ function Send_data()
                     }
                 },
                 success: function(data){
-                    console.log("success");
-                    if (Object.keys(data).length == 0)
+                    if (data.msg = "fail")
                     {
-                        console.log("empty data set");
+                        alert(data.msg)
+                        window.location.href = "login"
                     }
                     else
                     {
-                        console.log("hello");
-                        //console.log(data);
+                        window.location.href = "GUI_test"
                     }
                 },
                 error: function(data){

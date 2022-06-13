@@ -2,6 +2,7 @@ from curses.textpad import rectangle
 import random
 import string
 from time import timezone
+from urllib import response
 from venv import create
 from django.shortcuts import render,HttpResponse
 from django.http.response import JsonResponse
@@ -91,7 +92,12 @@ def register(request):
 
 def Save_canvas(request):
     if not request.user.is_authenticated:
-        return render(request, 'app/login.html')
+        dict = {
+            'status': 'fail',
+            'msg': 'save draw fail',
+        }
+        return JsonResponse(dict)
+        
     if request.method == 'POST':
         if request.POST.get('Json') == '1':
             Json = {}#create empty Json var to pass the Jsonresponse
@@ -142,3 +148,7 @@ def product_page(request):
         })
     print(Data_form)
     return render(request, 'app/product/product_listup_page.html', locals())
+
+def add_product(request):
+    form = add_product_model_form()
+    return render(request, 'app/product/add_product.html', {'form': form})

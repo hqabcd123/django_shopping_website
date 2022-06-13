@@ -8,6 +8,7 @@
   </head>
   <body>
     {% include "app/navbar.html" %}
+    {% if perms.product_borad.can_add %}<a href="{% url 'add_product' %}">Click here to add product</a>{% endif %}
     <div>
       <p>List product: </p>
       {% for data in Data_form %}

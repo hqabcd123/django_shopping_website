@@ -1,0 +1,18 @@
+{% load static %}
+{% include "app/bootstrap.html" %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+  </head>
+  <body>
+    {% include "app/navbar.html" %}
+    <div>
+      <form method="post">
+        {{form.as_p}}
+        {%csrf_token %}
+      </form>
+    </div>
+  </body>
+</html>
