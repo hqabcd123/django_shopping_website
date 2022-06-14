@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 {% load static %}
-{% include "app/bootstrap.html" %}
+{% include "app/Components/bootstrap.html" %}
 <html lang="en">
   <head>
     <meta charset="UTF-8">
     <title>Title</title>
   </head>
   <body>
-    {% include "app/navbar.html" %}
+    {% include "app/Components/navbar.html" %}
     {% if perms.product_borad.can_add %}
     {% endif %}
     <div>

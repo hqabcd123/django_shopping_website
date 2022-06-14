@@ -1,59 +1,26 @@
 <!DOCTYPE html>
 {% load static %}
-{% include "app/bootstrap.html" %}
+{% include "app/Components/bootstrap.html" %}
 <html lang="en">
   <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link href={%static "./css/Image_styles.css" %} rel="stylesheet" text="text/css" >
-    <link href={%static "./css/canvas_styles.css" %} rel="stylesheet" text="text/css" >
+    {% include "app/Components/canvas_link.html" %}
+    {% comment %} {% block canvas_link %}
+      <script type="text/javascript" src={% static "./js/GUI_test.js" %}></script>  
+      <link href={%static "./css/canvas_styles.css" %} rel="stylesheet" text="text/css" >
+    {% endblock canvas_link %} {% endcomment %}
+    {% comment %} <link href={%static "./css/canvas_styles.css" %} rel="stylesheet" text="text/css" > {% endcomment %}
     <script type="text/javascript" src={% static "./js/images_process.js" %}></script>
-    <script type="text/javascript" src={% static "./js/GUI_test.js" %}></script>
+    {% comment %} <script type="text/javascript" src={% static "./js/GUI_test.js" %}></script> {% endcomment %}
     <meta charset="UTF-8">
     <title>GUI</title>
   </head>
   <body>
-    {% comment %} {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">LOGO</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2" 
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <div class="collapse navbar-collapse" id="navbarNav2">
-        <ul class="navbar-nav">
-          {% if request.user.is_authenticated %}
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'userpage' %}"> {{request.user}} <span class="sr-only">(current)</span></a>
-          </li>
-          {% else %}
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'login' %}">User login <span class="sr-only">(current)</span></a>
-          </li>
-          {% endif %}
-          <li class="nav-item">
-            <a id="nav_Canvas" class="nav-link" href="#">Canvas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
-          </li>
-        </ul>
-      </div>
+    {% include "app/Components/navbar.html" %}
+    {% include "app/Components/GUI_window_navbar.html" %}
 
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          {% if request.user.is_authenticated %}
-          <li id="nav-item-logout" class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">logout</a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
-    {% endblock navbar %} {% endcomment %}
-    {% include "app/navbar.html" %}
-
-    <div id="GUI_window_navbar">
+    {% comment %} <div id="GUI_window_navbar">
 
       <span class="close">&times;</span>
       <a class="a">hello</a>
@@ -96,13 +63,13 @@
       
       <canvas class="canvas_test"></canvas>
 
-    </div>
-
-    <script type="text/javascript">
-      var data = {% autoescape off %}{{Data_form}}{% endautoescape %};
-      console.log("data: " + data["offset"]);
-      canvas_main(data);
-    </script>
+    </div> {% endcomment %}
+      <script type="text/javascript">
+        var data = {% autoescape off %}{{Data_form}}{% endautoescape %};
+        console.log("data: " + data["offset"]);
+        canvas_main(data);
+      </script>
+    
     
     <div class='container'>
       <div id="IMGarray">

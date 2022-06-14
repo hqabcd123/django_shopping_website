@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-{% load bootstrap4 %}
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+{% include "app/Components/bootstrap.html" %}
 <html lang="en">
   <head>
     <link href={%static "./css/login.css" %} rel="stylesheet" text="text/css" >
@@ -31,7 +26,7 @@
         </ul>
     </div>
 </nav> {% endcomment %}
-  {% include "app/navbar.html" %}
+  {% include "app/Components/navbar.html" %}
   
     <div class='login'>
         <h1>Register</h1>

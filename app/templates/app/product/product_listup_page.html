@@ -1,13 +1,17 @@
 {% load static %}
-{% include "app/bootstrap.html" %}
+{% include "app/Components/bootstrap.html" %}
+
+
 <html lang="en">
   <head>
     <meta charset="UTF-8">
     <link href={%static "./css/product_page_styles.css" %} rel="stylesheet" text="text/css" >
+    {% include "app/Components/canvas_link.html" %}
     <title>Product</title>
   </head>
   <body>
-    {% include "app/navbar.html" %}
+    {% include "app/Components/navbar.html" %}
+    {% include "app/Components/GUI_window_navbar.html" %}
     {% if perms.product_borad.can_add %}<a href="{% url 'add_product' %}">Click here to add product</a>{% endif %}
     <div>
       <p>List product: </p>
@@ -24,5 +28,8 @@
         </form>
       {% endfor %}
     </div>
+    <script type="text/javascript">
+      canvas_main({});
+    </script>
   </body>
 </html>

@@ -144,6 +144,7 @@ function Send_data()
             }
         },
         success: function(data){
+            console.log(data);
             console.log("Save code: " + data["Save_code"]);
             var Save_code = data["Save_code"]
             $.ajax({
@@ -165,9 +166,10 @@ function Send_data()
                     }
                 },
                 success: function(data){
-                    if (data.msg = "fail")
+                    if (data.status1 == "fail")
                     {
-                        alert(data.msg)
+                        alert(data.msg);
+                        console.log(data);
                         window.location.href = "login"
                     }
                     else
@@ -179,6 +181,7 @@ function Send_data()
                     alert("error2");
                 },
             });
+
         },
         error: function(data){
             alert("error1");

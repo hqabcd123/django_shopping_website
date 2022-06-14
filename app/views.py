@@ -92,6 +92,7 @@ def register(request):
 
 def Save_canvas(request):
     if not request.user.is_authenticated:
+        print('upload fail')
         dict = {
             'status': 'fail',
             'msg': 'save draw fail',
@@ -100,12 +101,9 @@ def Save_canvas(request):
         
     if request.method == 'POST':
         if request.POST.get('Json') == '1':
-            Json = {}#create empty Json var to pass the Jsonresponse
-            print(request.content_type)
-            print(request.POST)
+            dict = {'status': 'succes',}
             for key in request.POST:
                 print('key: ' + key)
-            
             ############################################
             #getting data
             username = request.user.username
@@ -115,15 +113,9 @@ def Save_canvas(request):
             rectangle = json.loads(request.POST.get('rectangle'))
             offset = json.loads(request.POST.get('offset'))
             ############################################
-
-
-            # temp = diagram(username = username, Save_code = str(Save_code), line = line,
-            #     circle = circle, rectangle = rectangle, offset = offset)
-            # temp.save()
-            
-            #update model data
             diagram.objects.filter(Save_code = Save_code).update(username = username, line = line,
                  circle = circle, rectangle = rectangle, offset = offset)
+            return JsonResponse(dict)
         else:
             print('Type is : ' + request.content_type)
             img = request.FILES.get('img')
@@ -132,11 +124,13 @@ def Save_canvas(request):
             print(request.FILES)
             Save_code = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
             print(Save_code)
-            Json = {'Save_code': Save_code}
+            Json = {
+                'Save_code': Save_code,
+                }
             temp = diagram(username = request.user.username, Save_code = Save_code, saved_image = img)
             temp.save()
             #diagram.objects.filter(Save_code = 1).update(saved_image = img)
-    return JsonResponse(Json)
+            return JsonResponse(Json)
 
 def product_page(request):
     Data_form = []

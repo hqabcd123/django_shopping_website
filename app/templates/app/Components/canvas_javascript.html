@@ -1,0 +1,5 @@
+<script type="text/javascript">
+    if ({{savecode_Data_form}} == null) var data = {}
+    else data = {% autoescape off %}{{savecode_Data_form}}{% endautoescape %}
+    canvas_main(data);
+</script>
