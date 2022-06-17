@@ -1,40 +1,55 @@
 from distutils.command.upload import upload
 from email.policy import default
 from pyexpat import model
-from re import M
-from turtle import width
 from django.db import models
+from django import forms
 from django.forms import ModelForm
 import datetime
 
 
 # Create your models here.
 #------------------------------product page models space---------------------------------------------#
+class product_code(models.Model):
+    product_code = models.TextField()
+
+    def __str__(self) -> str:
+        return self.product_code
+
+
+
 class product_images_album(models.Model):
-    product_name = models.TextField()
+    product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
     def default(self):
         return self.images_filter(default=True).first()
 
+    def __str__(self) -> str:
+        return self.product_code.product_code
+
 class product_image(models.Model):
-    product_name = models.TextField()
+    product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
     DIR = 'Product_images'
-    Prodcut_image = models.ImageField(upload_to = DIR)
+    main_image = models.BooleanField()
+    Product_image = models.ImageField(upload_to = DIR)
     album = models.ForeignKey(product_images_album, related_name='images', on_delete=models.CASCADE, default=False)
 
+    def __str__(self) -> str:
+        return self.product_code.product_code
+
 class discuss_borad(models.Model):#which is being to write command on the product page
-    username = models.CharField(max_length=20)
-    product_code = models.TextField()#link to save_code?
+    username = models.CharField(default=' ', max_length=20)
+    product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
     post_date = models.DateTimeField(default=datetime.datetime.now(), help_text='create date: ')
-    command = models.TextField()
+    command = models.TextField(default=' ')
 
     def __str__(self) -> str:
         return self.username + ' ' + self.command
 
 class product_borad(models.Model):#Whole product's big picture
     product_name = models.TextField()
+    product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
     Create_Date = models.DateTimeField(default=datetime.datetime.now(), help_text='create date: ')
     Product_delta = models.TextField()
-    Product_image = models.ForeignKey(product_image, related_name='image', on_delete=models.CASCADE, default=False)
+    Product_image = models.ForeignKey(product_images_album, related_name='image', on_delete=models.CASCADE, default=False)
     User_command = models.ForeignKey(discuss_borad, related_name='user', on_delete=models.CASCADE, default=False)
 
     def get_all_data(self) -> dict:
@@ -55,10 +70,11 @@ class product_borad(models.Model):#Whole product's big picture
             ('can_add', 'add'),
         )
 
-class add_product_model_form(ModelForm):
-    class Meta():
-        model = product_borad
-        fields = '__all__'
+#------------------------------models forms space---------------------------------------------------#
+class add_product_form(forms.Form):
+    product_name = forms.CharField()
+    Product_delta = forms.CharField(widget=forms.Textarea())
+    Product_image = forms.FileField()
 
 #------------------------------product page models space---------------------------------------------#
 

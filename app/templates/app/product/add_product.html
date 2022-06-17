@@ -5,13 +5,33 @@
   <head>
     <meta charset="UTF-8">
     <title>Add Product</title>
+
+    {% comment %} <script type="text/javascript">
+      function from_upload()
+      {
+        $("#form").submit();
+      }
+      async function form_image_upload()
+      {
+        await from_upload();
+        $("#form_image_upload").submit();
+      }
+      $(document).ready(function()
+      {
+        $("#form_upload").click(function()
+        {
+          form_image_upload();
+        });
+      });
+    </script> {% endcomment %}
   </head>
   <body>
     {% include "app/Components/navbar.html" %}
     <div>
-      <form method="post">
-        {{form.as_p}}
+      <form method="post" id="form" enctype="multipart/form-data">
         {%csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="submit" ></input>
       </form>
     </div>
   </body>

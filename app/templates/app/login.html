@@ -11,7 +11,6 @@
   <body>
   {% include "app/Components/navbar.html" %}
   {% include "app/Components/GUI_window_navbar.html" %}
-  {% include "app/Components/canvas_javascript.html" %}
   
     <div class='login'>
       <form action="{% url 'login' %}"method="post">{% csrf_token %}
@@ -30,5 +29,6 @@
         <a href="{% url 'register' %}" method="post">Register</a>
       </form>
     </div>
+    {% include "app/Components/canvas_javascript.html" %}
   </body>
 </html>

@@ -383,56 +383,59 @@ function Draw(saved_draw_data)
 
 function canvas_main(saved_draw_data)
 {
-    var canvas2 = $("#GUI_window_navbar .canvas_test");
-    var ctx2 = canvas2[0].getContext("2d");
-    var graph = "line";//line
-    canvas2.attr("width", window.innerWidth);
-    canvas2.attr("height", window.innerHeight-75);
-    $("document").ready(function()
+    $(document).ready(function()
     {
-    //create a grid canvas
-    $("#navbarNav2 #nav_Canvas").on("click", function()
-    {
-        canvasObj = {
-            canvas : canvas2,
-            ctx : ctx2,
-            graph : graph
-        };
-        $("#GUI_window_navbar").css("display", "grid");
-        Draw(saved_draw_data);
-    });
-    //close the grid block
-    $(".close").on("click", function()
-    {
-        canvasObj.ctx.clearRect(0, 0, $(canvas2).attr("width"), $(canvas2).attr("height"));
-        canvasObj = {};
-        $("#GUI_window_navbar").css("display", "none");
-    });
-    //change diagram to circle
-    $("#circle").on("click", function()
-    {
-        canvasObj.graph = "circle";
-    });
-    //change diagram to line
-    $("#line").on("click", function()
-    {
-        canvasObj.graph = "line";
-    });
-    //delete element
-    $("#delete").on("click", function()
-    {
-        canvasObj.graph = "delete";
-    });
-    //clear canvas
-    $("#clear").on("click", function()
-    {
-        canvasObj.ctx.clearRect(0, 0, $(canvas2).attr("width"), $(canvas2).attr("height"));
-        canvasObj = {};
-    });
-    $("#Save").on("click", function()
-    {
-        Send_data();
-        //alert("circle: " + diagramObj.circle[0].get_x0());
-    });
-    });
+        var canvas2 = $("#GUI_window_navbar .canvas_test");
+        var ctx2 = canvas2[0].getContext("2d");
+        var graph = "line";//line
+        canvas2.attr("width", window.innerWidth);
+        canvas2.attr("height", window.innerHeight-75);
+        $("document").ready(function()
+        {
+        //create a grid canvas
+        $("#navbarNav2 #nav_Canvas").on("click", function()
+        {
+            canvasObj = {
+                canvas : canvas2,
+                ctx : ctx2,
+                graph : graph
+            };
+            $("#GUI_window_navbar").css("display", "grid");
+            Draw(saved_draw_data);
+        });
+        //close the grid block
+        $(".close").on("click", function()
+        {
+            canvasObj.ctx.clearRect(0, 0, $(canvas2).attr("width"), $(canvas2).attr("height"));
+            canvasObj = {};
+            $("#GUI_window_navbar").css("display", "none");
+        });
+        //change diagram to circle
+        $("#circle").on("click", function()
+        {
+            canvasObj.graph = "circle";
+        });
+        //change diagram to line
+        $("#line").on("click", function()
+        {
+            canvasObj.graph = "line";
+        });
+        //delete element
+        $("#delete").on("click", function()
+        {
+            canvasObj.graph = "delete";
+        });
+        //clear canvas
+        $("#clear").on("click", function()
+        {
+            canvasObj.ctx.clearRect(0, 0, $(canvas2).attr("width"), $(canvas2).attr("height"));
+            canvasObj = {};
+        });
+        $("#Save").on("click", function()
+        {
+            Send_data();
+            //alert("circle: " + diagramObj.circle[0].get_x0());
+        });
+        });
+    })
 }

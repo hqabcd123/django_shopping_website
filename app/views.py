@@ -134,15 +134,47 @@ def Save_canvas(request):
 
 def product_page(request):
     Data_form = []
-    data = product_borad.objects.all()
+    data = product_image.objects.all()
     for cell in data:
+        product = product_code.objects.get(product_code = cell.product_code.product_code)
+        product = product.product_borad_set.all()[0]
         Data_form.append({
-            'product_name': cell.product_name,
-            'Product_image': cell.Product_image.Prodcut_image,
+            'product_name': product.product_name,
+            'Product_image': cell.Product_image,
         })
     print(Data_form)
     return render(request, 'app/product/product_listup_page.html', locals())
 
 def add_product(request):
-    form = add_product_model_form()
-    return render(request, 'app/product/add_product.html', {'form': form})
+    if request.method == 'GET':
+        form = add_product_form()
+        return render(request, 'app/product/add_product.html', locals())
+    elif request.method == 'POST':
+        print(request.FILES)
+        print(request.POST)
+        form = add_product_form(request.POST)
+        print(form.is_valid())
+        print(request.FILES.get('Product_image'))
+        N = 32
+        gen_product_code = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
+        code = product_code(product_code = gen_product_code)
+        code.save()
+        code = product_code.objects.get(product_code = gen_product_code)
+        product_images_album.objects.get_or_create(product_code = code)
+        discuss_borad.objects.get_or_create(product_code = code)
+        borad = discuss_borad.objects.get(product_code = code)
+        album = product_images_album.objects.get(product_code = code)
+        product_image.objects.get_or_create(
+            product_code = code,
+            Product_image = request.FILES.get('Product_image'),
+            main_image = True,
+            album = album,
+        )
+        product_borad.objects.get_or_create(
+            product_name = request.POST.get('product_name'),
+            Product_delta = request.POST.get('Product_delta'),
+            product_code = code,
+            Product_image = album,
+            User_command = borad,
+        )
+        return render(request, 'app/product/product_listup_page.html', locals())
