@@ -15,7 +15,12 @@ class product_code(models.Model):
     def __str__(self) -> str:
         return self.product_code
 
+class product_type(models.Model):
+    product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
+    product_type = models.TextField()
 
+    def __str__(self) -> str:
+        return 'the type of ' + self.product_code.product_code + 'is ' + self.product_type
 
 class product_images_album(models.Model):
     product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)

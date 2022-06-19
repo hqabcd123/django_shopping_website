@@ -1,9 +1,32 @@
+#word
+{
+    display: block;
+    position: absolute;
+    height: 700px;
+    color: brown;
+}
+
+#e
+{
+    background-color: aqua;
+    min-height: 400px;
+    height: 100%;
+    width: 200;
+}
+
+html, body, .container
+{
+    background-color: rgb(228, 225, 225);
+    height: auto;
+    min-height: 100%;
+}
+
 #IMGarray
 {
     position:relative;
-    height:281px;
-    width:450px;
     margin:0 auto;
+    height: 400px;
+    width: 100%;
 }
 
 #IMGarray img
@@ -11,7 +34,7 @@
     /* max-width: 100%;
     max-height: 100%; */
     height: 300px;
-    width: 700px;
+    width: 100%;
     position:absolute;
     left:0;
     -webkit-transition: opacity 1s ease-in-out;

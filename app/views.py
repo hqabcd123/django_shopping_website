@@ -177,4 +177,4 @@ def add_product(request):
             Product_image = album,
             User_command = borad,
         )
-        return render(request, 'app/product/product_listup_page.html', locals())
+        return HttpResponseRedirect('GUI_test/') #render(request, 'app/product/product_listup_page.html', locals())

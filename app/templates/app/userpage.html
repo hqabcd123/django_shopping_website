@@ -5,9 +5,11 @@
   <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% include "app/Components/canvas_link.html" %}
   </head>
   <body>
     {% include "app/Components/navbar.html" %}
+    {% include "app/Components/GUI_window_navbar.html" %}
     {% if perms.product_borad.can_add %}
     {% endif %}
     <div>
@@ -20,5 +22,6 @@
         </form>
       {% endfor %}
     </div>
+    {% include "app/Components/canvas_javascript.html" %}
   </body>
 </html>

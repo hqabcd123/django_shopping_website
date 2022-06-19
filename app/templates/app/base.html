@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+{% include "app/Components/bootstrap.html" %}
+<html lang="en">
+  <head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    {% include "app/Components/canvas_link.html" %}
+    <script type="text/javascript" src={% static "./js/images_process.js" %}></script>
+    <meta charset="UTF-8">
+    {% block head %}{% endblock head %}
+    <title>{% block title %}{% endblock title %}</title>
+  </head>
+  <body>
+    {% include "app/Components/navbar.html" %}
+    {% include "app/Components/GUI_window_navbar.html" %}
+
+    {% block canvas %}{% endblock canvas %}
+
+    {% block Data_form_import %}{% endblock Data_form_import %}
+    
+    {% block image_feedout %}{% endblock image_feedout %}
+  </body>
+</html>

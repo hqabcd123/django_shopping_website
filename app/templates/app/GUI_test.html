@@ -1,18 +1,13 @@
-<!DOCTYPE html>
+{% extends 'app/base.html' %}
+{% comment %} <!DOCTYPE html>
 {% load static %}
 {% include "app/Components/bootstrap.html" %}
 <html lang="en">
   <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link href={%static "./css/Image_styles.css" %} rel="stylesheet" text="text/css" >
+    
     {% include "app/Components/canvas_link.html" %}
-    {% comment %} {% block canvas_link %}
-      <script type="text/javascript" src={% static "./js/GUI_test.js" %}></script>  
-      <link href={%static "./css/canvas_styles.css" %} rel="stylesheet" text="text/css" >
-    {% endblock canvas_link %} {% endcomment %}
-    {% comment %} <link href={%static "./css/canvas_styles.css" %} rel="stylesheet" text="text/css" > {% endcomment %}
     <script type="text/javascript" src={% static "./js/images_process.js" %}></script>
-    {% comment %} <script type="text/javascript" src={% static "./js/GUI_test.js" %}></script> {% endcomment %}
     <meta charset="UTF-8">
     <title>GUI</title>
   </head>
@@ -20,50 +15,6 @@
     {% include "app/Components/navbar.html" %}
     {% include "app/Components/GUI_window_navbar.html" %}
 
-    {% comment %} <div id="GUI_window_navbar">
-
-      <span class="close">&times;</span>
-      <a class="a">hello</a>
-
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Tools</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#tool_bar" 
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="tool_bar">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a id="line" class="nav-link" href="#">line</a>
-            </li>
-            <li cla
-            <li class="nav-item">
-              <a id="circle" class="nav-link" href="#">circle</a>
-            </li>
-            <li class="nav-item">
-              <a id="rectangle" class="nav-link" href="#">rectangle</a>
-            </li>
-            <li class="nav-item">
-              <a id="triangle" class="nav-link" href="#">triangle</a>
-            </li>
-            <li class="nav-item">
-              <a id="delete" class="nav-link" href="#">delete</a>
-            </li>
-            <li class="nav-item">
-              <a id="clear" class="nav-link" href="#">clear</a>
-            </li>
-            <li class="nav-item">
-              <a id="Save" class="nav-link" href="#">Save</a>
-            </li>
-            
-          </ul>
-        </div>
-      </nav>
-      
-      <canvas class="canvas_test"></canvas>
-
-    </div> {% endcomment %}
       <script type="text/javascript">
         var data = {% autoescape off %}{{Data_form}}{% endautoescape %};
         console.log("data: " + data["offset"]);
@@ -76,21 +27,10 @@
         <img class="bottom" src="/Media/IMG_1018.JPG"></img>
         <img class="top" src="/Media/HSa78ycfqdiVYAcM.jpg"></img>
       </div>
-
-      <br>
-      {% comment %} <div id="GUI_window">
-        <canvas class="canvas_test"></canvas>
+      <div id="word">
+        <p>wqgfhiqoidf</p>
       </div>
-      <p>mouse location is: <spam id="spam_mouse_location"></spam></p>
-
-      <script type="text/javascript">
-        var canvas = $("#GUI_window .canvas_test");
-        var ctx = canvas[0].getContext("2d");
-        canvas.attr("width", 1000);
-        canvas.attr("height", 1000);
-        Draw(canvas, ctx);
-      </script> {% endcomment %}
-      
+      <br>
       <script type="text/javascript">
         //console.log("{{Json_img_dir}}")
         var Json_img = {% autoescape off %}{{data_form}}{% endautoescape %}
@@ -99,17 +39,44 @@
           images_loop(Json_img);
         });
       </script>
-
-      <br>
-      <br>
-
-      <form id="form1" action="#">
-        <input type="text" id="input-message">
-        <input type="submit" onclick="Clickbox()" value="input">
-        <br>
-        <label id="output-message"></label>
-      </form>
-        <script>Clickbox()</script>
-    </div>  
+    </div>
+    <div id="e"></div>
   </body>
-</html>
+</html> {% endcomment %}
+
+
+{% block title %}GUI{% endblock title %}
+{% block canvas %}
+  <script type="text/javascript">
+    var data = {% autoescape off %}{{Data_form}}{% endautoescape %};
+    console.log("data: " + data["offset"]);
+    canvas_main(data);
+  </script>
+{% endblock canvas %}
+{% block image_feedout %}
+  <div class='container'>
+    <div id="IMGarray">
+      <img class="bottom" src="/Media/IMG_1018.JPG"></img>
+      <img class="top" src="/Media/HSa78ycfqdiVYAcM.jpg"></img>
+    </div>
+    <div id="word">
+      <p>wqgfhiqoidf</p>
+    </div>
+    <br>
+    <script type="text/javascript">
+      //console.log("{{Json_img_dir}}")
+      var Json_img = {% autoescape off %}{{data_form}}{% endautoescape %}
+      $(document).ready(function ()
+      {
+        images_loop(Json_img);
+      });
+    </script>
+  </div>
+{% endblock image_feedout %}
+
+{% block Data_form_import %}
+  <div>
+    <p>recommand product</p>
+    <img></img>
+  </div>
+{% endblock Data_form_import %}
