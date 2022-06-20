@@ -149,13 +149,24 @@ def add_product(request):
         print(request.FILES.get('Product_image'))
         N = 32
         gen_product_code = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
+        #create product code object
+        #############################################################################################
         code = product_code(product_code = gen_product_code)
         code.save()
-        code = product_code.objects.get(product_code = gen_product_code)
-        product_images_album.objects.get_or_create(product_code = code)
-        discuss_borad.objects.get_or_create(product_code = code)
-        borad = discuss_borad.objects.get(product_code = code)
-        album = product_images_album.objects.get(product_code = code)
+        code = product_code.objects.get(product_code = gen_product_code)#get product code object
+        #############################################################################################
+
+        product_images_album.objects.get_or_create(product_code = code)#create product image album
+        discuss_borad.objects.get_or_create(product_code = code)#create discuss borad
+        borad = discuss_borad.objects.get(product_code = code)#save discuss borad to borad
+        album = product_images_album.objects.get(product_code = code)#save product image album to album
+
+        product_type.objects.get_or_create(product_type = request.POST.get('product_type'))
+        set_of_product_type.objects.get_or_create(
+            product_code = code,
+            set_of_product_type = product_type.objects.get(product_type = request.POST.get('product_type')),
+        )
+        product_type_set = set_of_product_type.objects.get(product_code = code)
         product_image.objects.get_or_create(
             product_code = code,
             Product_image = request.FILES.get('Product_image'),
@@ -168,5 +179,6 @@ def add_product(request):
             product_code = code,
             Product_image = album,
             User_command = borad,
+            set_of_product_type = product_type_set,
         )
         return HttpResponseRedirect('GUI_test/') #render(request, 'app/product/product_listup_page.html', locals())

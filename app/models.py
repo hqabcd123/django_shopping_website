@@ -17,11 +17,17 @@ class product_code(models.Model):
         return self.product_code
 
 class product_type(models.Model):
-    product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
-    product_type = models.TextField(default=' ')
+    product_type = models.TextField()
 
     def __str__(self) -> str:
-        return 'the type of ' + self.product_code.product_code + 'is ' + self.product_type
+        return 'product type: ' + self.product_type
+
+class set_of_product_type(models.Model):
+    product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
+    set_of_product_type = models.ForeignKey(product_type, on_delete=models.CASCADE, default=False)
+
+    def __str__(self) -> str:
+        return 'the type of ' + self.product_code.product_code + 'is ' + self.set_of_product_type
 
 class product_images_album(models.Model):
     product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
@@ -57,7 +63,7 @@ class product_borad(models.Model):#Whole product's big picture
     Product_delta = models.TextField()
     Product_image = models.ForeignKey(product_images_album, related_name='image', on_delete=models.CASCADE, default=False)
     User_command = models.ForeignKey(discuss_borad, related_name='user', on_delete=models.CASCADE, default=False)
-    product_type = models.ForeignKey(product_type, on_delete=models.CASCADE, default=False)
+    set_of_product_type = models.ForeignKey(set_of_product_type, on_delete=models.CASCADE, default=False)
 
     def get_all_data(self) -> dict:
         dict = {
@@ -81,6 +87,7 @@ class product_borad(models.Model):#Whole product's big picture
 class add_product_form(forms.Form):
     product_name = forms.CharField()
     Product_delta = forms.CharField(widget=forms.Textarea())
+    product_type = forms.CharField()
     Product_image = forms.FileField()
 
 #------------------------------product page models space---------------------------------------------#
