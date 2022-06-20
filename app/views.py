@@ -22,14 +22,7 @@ def home(request):
 
 #get in GUI_TEST.html and get all image we want at images looping
 def GUI_test(request):
-    # current_path = os.path.dirname(__file__)
     data_form = []
-    # DIR = '..\Media'
-    # DIR = os.path.join(current_path, DIR)
-    # print (DIR)
-    # img_dir = [name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))]
-    # print (img_dir)
-    # Json_img_dir = json.dumps(img_dir)
     temp = Image_import.objects.all()
     temp = temp.filter(Process_type = '1')
     for data in temp:
@@ -37,7 +30,6 @@ def GUI_test(request):
             data_form.append(data.Image.url)
             print(data.Image.url)
     print (data_form)
-    #print ([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
 
     if request.method == 'GET':
         Data_form = {}

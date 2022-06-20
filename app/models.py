@@ -1,6 +1,7 @@
 from distutils.command.upload import upload
 from email.policy import default
 from pyexpat import model
+from tkinter import CASCADE
 from django.db import models
 from django import forms
 from django.forms import ModelForm
@@ -17,7 +18,7 @@ class product_code(models.Model):
 
 class product_type(models.Model):
     product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
-    product_type = models.TextField()
+    product_type = models.TextField(default=' ')
 
     def __str__(self) -> str:
         return 'the type of ' + self.product_code.product_code + 'is ' + self.product_type
@@ -56,6 +57,7 @@ class product_borad(models.Model):#Whole product's big picture
     Product_delta = models.TextField()
     Product_image = models.ForeignKey(product_images_album, related_name='image', on_delete=models.CASCADE, default=False)
     User_command = models.ForeignKey(discuss_borad, related_name='user', on_delete=models.CASCADE, default=False)
+    product_type = models.ForeignKey(product_type, on_delete=models.CASCADE, default=False)
 
     def get_all_data(self) -> dict:
         dict = {
@@ -68,7 +70,7 @@ class product_borad(models.Model):#Whole product's big picture
         return dict
 
     def __str__(self) -> str:
-        return self.User_command.username + ': ' + self.User_command.command
+        return self.product_name + ': ' + self.User_command.command
 
     class Meta:
         permissions = (
