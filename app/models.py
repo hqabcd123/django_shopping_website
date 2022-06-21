@@ -9,6 +9,12 @@ import datetime
 
 
 # Create your models here.
+
+#------------------------------user models space---------------------------------------------#
+
+
+#--------------------------------------------------------------------------------------------#
+
 #------------------------------product page models space---------------------------------------------#
 class product_code(models.Model):
     product_code = models.TextField()
@@ -83,11 +89,23 @@ class product_borad(models.Model):#Whole product's big picture
             ('can_add', 'add'),
         )
 
+class user_foodprint(models.Model):
+    foodprint = models.TextField()
+
+class user_foorprint_set(models.Model):
+    foodprint_set = models.ForeignKey(user_foodprint, on_delete=models.CASCADE, default=False)
+
 #------------------------------models forms space---------------------------------------------------#
 class add_product_form(forms.Form):
+    Type = [
+        ('shoes', 'shoes'),
+        ('range', 'range'),
+        ('shirt', 'shirt'),
+        ('pants', 'pants'),
+    ]
     product_name = forms.CharField()
     Product_delta = forms.CharField(widget=forms.Textarea())
-    product_type = forms.CharField()
+    product_type = forms.CharField(widget=forms.Select(choices=Type))
     Product_image = forms.FileField()
 
 #------------------------------product page models space---------------------------------------------#

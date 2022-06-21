@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('product/', views.product_page, name='product'),
     path('add_product/', views.add_product, name='add_product'),
+    path('add_product/GUI_test/', views.GUI_test),
     path('login/GUI_test/Save_canvas/', views.Save_canvas),
 
 ]
