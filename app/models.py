@@ -6,12 +6,16 @@ from django.db import models
 from django import forms
 from django.forms import ModelForm
 import datetime
+from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
 
 # Create your models here.
 
 #------------------------------user models space---------------------------------------------#
-
+class User(AbstractBaseUser):
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+    history = models.ForeignKey(user_history_set, on_delete=models.CASCADE, default=False)
 
 #--------------------------------------------------------------------------------------------#
 
@@ -89,11 +93,11 @@ class product_borad(models.Model):#Whole product's big picture
             ('can_add', 'add'),
         )
 
-class user_foodprint(models.Model):
+class user_history(models.Model):
     foodprint = models.TextField()
 
-class user_foorprint_set(models.Model):
-    foodprint_set = models.ForeignKey(user_foodprint, on_delete=models.CASCADE, default=False)
+class user_history_set(models.Model):
+    foodprint_set = models.ForeignKey(user_history, on_delete=models.CASCADE, default=False)
 
 #------------------------------models forms space---------------------------------------------------#
 class add_product_form(forms.Form):
