@@ -11,17 +11,9 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
 # Create your models here.
 
-#------------------------------user models space---------------------------------------------#
-class User(AbstractBaseUser):
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
-    history = models.ForeignKey(user_history_set, on_delete=models.CASCADE, default=False)
-
-#--------------------------------------------------------------------------------------------#
-
 #------------------------------product page models space---------------------------------------------#
 class product_code(models.Model):
-    product_code = models.TextField()
+    product_code = models.TextField(unique=True)
 
     def __str__(self) -> str:
         return self.product_code
@@ -93,12 +85,6 @@ class product_borad(models.Model):#Whole product's big picture
             ('can_add', 'add'),
         )
 
-class user_history(models.Model):
-    foodprint = models.TextField()
-
-class user_history_set(models.Model):
-    foodprint_set = models.ForeignKey(user_history, on_delete=models.CASCADE, default=False)
-
 #------------------------------models forms space---------------------------------------------------#
 class add_product_form(forms.Form):
     Type = [
@@ -113,6 +99,84 @@ class add_product_form(forms.Form):
     Product_image = forms.FileField()
 
 #------------------------------product page models space---------------------------------------------#
+
+#------------------------------user models space---------------------------------------------#
+
+class user_history(models.Model):
+    foodprint = models.ForeignKey(product_borad, on_delete=models.CASCADE, default=False)
+
+class user_history_set(models.Model):
+    foodprint_set = models.ForeignKey(user_history, on_delete=models.CASCADE, default=False)
+
+    def __str__(self) -> str:
+        return str(self.foodprint_set.foodprint)
+
+class User_Manager(BaseUserManager):
+    def create_user(self, email, username, password=None):
+        if not email:
+            raise ValueError('Users must have an email address')
+        if not username:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(
+            email = self.normalize_email(email),
+            username = username,
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_staff(self, email, username, password):
+        user = self.model(
+            email = self.normalize_email(email),
+            username = username,
+            password = password,
+        )
+        self.isstaff = True
+        user.save(using=self._db)
+        return user
+
+def set_default_profile_image():
+    return 'hio01.png'
+
+def get_upload__profile_image_path(self, filename):
+    return 'profile_images/{}/'.format(self.pk)
+
+class User(AbstractBaseUser):
+    email = models.EmailField(
+        verbose_name='email',
+        max_length=255,
+        unique=True,
+        blank=True
+    )
+    username = models.CharField(max_length=30, unique=True)
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+    history = models.ForeignKey(user_history_set, on_delete=models.CASCADE, default=False ,blank=True)
+    hide_email = models.BooleanField(default=True)
+    profile_image = models.ImageField(upload_to=get_upload__profile_image_path, default=set_default_profile_image)
+
+    objects = User_Manager()
+
+    USERNAME_FIELD = 'username'
+    #REQUIRED_FIELDS = ['username']
+
+    def __str__(self) -> str:
+        return self.username
+
+    def get_profile_image_filename(self):
+        return str(self.profile_image)[str(self.profile_image).index('profile_images/{}/'.format(self.pk)):]
+
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+
+    def has_module_perm(self, app_label):
+        return True
+
+#--------------------------------------------------------------------------------------------#
+
+
 
 class image_album(models.Model):
     def default(self):
