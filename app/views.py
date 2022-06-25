@@ -11,7 +11,7 @@ import json
 from .models import *
 from app.img_base64_convert import img_base64_convert as conveter
 from django.contrib import auth
-from django.contrib.auth.forms import UserCreationForm
+from .form import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.http import QueryDict
 

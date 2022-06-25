@@ -1,0 +1,18 @@
+.self_intro
+{
+    background-color: grey;
+    height: 200px;
+    width: 100%;
+}
+
+.self_intro header
+{
+    text-align: center;
+    
+}
+
+#self_intro_table
+{
+    width: 100%;
+    font-size: 20px;
+}

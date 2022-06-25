@@ -29,7 +29,7 @@ class set_of_product_type(models.Model):
     set_of_product_type = models.ForeignKey(product_type, on_delete=models.CASCADE, default=False)
 
     def __str__(self) -> str:
-        return 'the type of ' + self.product_code.product_code + 'is ' + self.set_of_product_type
+        return 'the type of ' + self.product_code.product_code + 'is ' + str(self.set_of_product_type)
 
 class product_images_album(models.Model):
     product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
@@ -127,13 +127,13 @@ class User_Manager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_staff(self, email, username, password):
-        user = self.model(
+    def create_superuser(self, email, username, password):
+        user = self.create_user(
             email = self.normalize_email(email),
             username = username,
             password = password,
         )
-        self.isstaff = True
+        self.is_admin = True
         user.save(using=self._db)
         return user
 
@@ -148,12 +148,18 @@ class User(AbstractBaseUser):
         verbose_name='email',
         max_length=255,
         unique=True,
-        blank=True
+        blank=True,
+        null=True,
     )
     username = models.CharField(max_length=30, unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    history = models.ForeignKey(user_history_set, on_delete=models.CASCADE, default=False ,blank=True)
+    history = models.ForeignKey(user_history_set,
+        on_delete=models.CASCADE,
+        default=False,
+        blank=True,
+        null=True,
+        )
     hide_email = models.BooleanField(default=True)
     profile_image = models.ImageField(upload_to=get_upload__profile_image_path, default=set_default_profile_image)
 
@@ -171,8 +177,12 @@ class User(AbstractBaseUser):
     def has_perm(self, perm, obj=None):
         return self.is_admin
 
-    def has_module_perm(self, app_label):
+    def has_module_perms(self, app_label):
         return True
+
+    @property
+    def is_staff(self):
+        return self.is_admin
 
 #--------------------------------------------------------------------------------------------#
 
