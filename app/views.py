@@ -15,6 +15,19 @@ from .form import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.http import QueryDict
 
+def get_ad_image():
+    adv = advertise.objects.all()
+    print(adv)
+    code = []
+    Data = []
+    for cell in adv:
+        if cell.product_set.code not in code:
+            code.append(cell.product_set.code)
+            Data.append(cell)
+            print(cell.adv_image)
+
+    return Data
+
 def home(request):
     #return render(request, 'index.html')
     return render(request, 'app/app.html')
@@ -22,6 +35,7 @@ def home(request):
 
 #get in GUI_TEST.html and get all image we want at images looping
 def GUI_test(request):
+    adv = get_ad_image()
     data_form = []
     temp = Image_import.objects.all()
     temp = temp.filter(Process_type = '1')

@@ -1,7 +1,15 @@
+body
+{
+    background-image: url("/Media/self_intro/IMG_1305.jpg");
+    background-size: cover;
+    background-color:rgba(255,255,255,0.6);/*tunning opacity*/
+    background-blend-mode:lighten;
+}
+
 .self_intro
 {
     background-color: grey;
-    height: 200px;
+    height: 100px;
     width: 100%;
     margin: 0;
 }
@@ -9,12 +17,18 @@
 .self_intro header
 {
     text-align: center;
-    vertical-align: 70px;
-    font-size: 100%;
-    font: inherit;    
+    vertical-align: middle;
+    font-size: 70px;
 }
 
-#self_intro_table
+.about_me
+{
+    text-align: left;
+    font-size: 20px;
+}
+
+
+.self_intro_table
 {
     width: 100%;
     font-size: 30px;
@@ -24,14 +38,13 @@
     
 }
 
-#self_intro_table .column1
+.self_intro_table .column1
 {
-    width: 120px;
+    width: 220px;
     text-align: left;
     vertical-align: top;
 }
-
-#self_intro_table .column2
+.self_intro_table .column2
 {
     display: table-cell;
     padding-left: 20px;
@@ -40,7 +53,7 @@
     vertical-align: top;
 }
 
-#self_intro_table .column3
+.self_intro_table .column3
 {
     height: 100%;
     right: 40px;

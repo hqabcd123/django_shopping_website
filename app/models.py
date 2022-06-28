@@ -100,6 +100,25 @@ class add_product_form(forms.Form):
 
 #------------------------------product page models space---------------------------------------------#
 
+#------------------------------advertise page models space---------------------------------------------#
+class product_set(models.Model):
+    product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
+    code = models.CharField(max_length=32)
+
+    def __str__(self) -> str:
+        return 'code: ' + self.code + ' ' + self.product_code.product_code
+
+class advertise(models.Model):
+    product_set = models.ForeignKey(product_set, on_delete=models.CASCADE, default=False)
+    head = models.CharField(max_length=120, unique=True)
+    adv_image = models.ImageField(default='advertise/IMG_1103.JPG', upload_to='advertise/')
+    disciption = models.TextField()
+
+
+    def __str__(self) -> str:
+        return self.head + ' ' + self.disciption
+#------------------------------advertise page models space---------------------------------------------#
+
 #------------------------------user models space---------------------------------------------#
 
 class user_history(models.Model):

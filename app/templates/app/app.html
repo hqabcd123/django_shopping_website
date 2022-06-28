@@ -8,8 +8,15 @@
   </head>
   <body>
     <div class="self_intro"><header>自己紹介</header></div>
-
-    <div id="self_intro_table">
+    <p class="about_me">About me: </p>
+    <div class="self_intro_table">
+      <table>
+        <tr>
+          <td class="column1">Work Experience</td>
+          <td class="column2">:</td>
+          <td class="column3">MACOHO Ltd.</td>
+      </tr>
+      </table>
       <table>
         <tr>
           <td class="column1">Name</td>
@@ -48,11 +55,6 @@
       </tr>
       </table>
       
-    </div>
-
-    
-
-      <br>
 
     </div>
     <form action="{% url 'GUI_test' %}"method="get">

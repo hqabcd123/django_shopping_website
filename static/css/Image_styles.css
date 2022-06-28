@@ -57,3 +57,13 @@ html, body, .container
 {
     background-color: blue;
 }
+
+/******************************************************************************************************/
+
+#myCarousel .carousel-inner img
+{
+    display: block;
+    margin: auto;
+    width: 50%;
+    height: 200px;
+}

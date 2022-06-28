@@ -4,6 +4,8 @@
 <html lang="en">
   <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     {% include "app/Components/canvas_link.html" %}
     <script type="text/javascript" src={% static "./js/images_process.js" %}></script>
     <meta charset="UTF-8">
@@ -15,6 +17,9 @@
     {% include "app/Components/GUI_window_navbar.html" %}
 
     {% block canvas %}{% endblock canvas %}
+
+    {% block advertise %}{% endblock advertise %}
+    
     {% block image_feedout %}{% endblock image_feedout %}
     {% block Data_form_import %}{% endblock Data_form_import %}
   </body>

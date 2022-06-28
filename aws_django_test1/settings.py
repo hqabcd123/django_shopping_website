@@ -219,4 +219,4 @@ CORS_ORIGIN_WHITELIST = [
 
 LOGIN_REDIRECT_URL = "/app/GUI_test"
 
-AUTH_USER_MODEL = 'app.User'
+#AUTH_USER_MODEL = 'app.User'
