@@ -15,6 +15,8 @@ from .form import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.http import QueryDict
 
+adv_list = []
+
 def get_ad_image():
     adv = advertise.objects.all()
     print(adv)
@@ -199,6 +201,10 @@ def add_product(request):
 
 
 def adv_page(request):
+    global adv_list
+    context = {
+        'adv_list': adv_list,
+    }
     if request.method == 'POST':
         data_form = []
         print('POST')
@@ -209,11 +215,17 @@ def adv_page(request):
         for data in product_set.objects.all():
             if data.code == code:
                 print(data.product_code.product_code)
-                data_form.append({'product_code': data.product_code.product_code})
-        for data in data_form:
-            print(data['product_code'])
-            product_borad.objects.get(product_code=data['product_code'])
-
-    elif request.method == 'GET':
-        print('GET')
-    return render(request, 'app/adv_page.html')
+                temp = product_code.objects.get(product_code = data.product_code.product_code)
+                print(temp)
+                temp1 = temp.product_borad_set.all()[0]
+                temp2 = temp.product_image_set.all()[0]
+                data_form.append({
+                    'product_borad': temp1,
+                    'product_image': temp2,
+                })
+        if len(adv_list) > 0:
+            adv_list = []
+        adv_list.append({'value': value})
+        adv_list.append({'data_form': data_form})
+        print(adv_list)
+    return render(request, 'app/adv_page.html', context)

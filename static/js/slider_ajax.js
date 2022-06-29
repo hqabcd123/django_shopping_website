@@ -14,7 +14,8 @@ $(".item").click(function(){
             }
         },
         success: function(data){
-            window.location.href = "adv_page/"
+            window.location.href = "adv_page/";
+            console.log(data);
         },
         error: function(data){
             alert("error");

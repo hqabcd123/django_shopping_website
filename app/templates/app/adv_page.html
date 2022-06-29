@@ -1,1 +1,21 @@
-hello
+{% extends 'app/base.html' %}
+
+{% block title %}  {{adv_list.0.value}} {% endblock title %}
+
+{% block canvas %}
+<script type="text/javascript">
+    canvas_main({});
+</script>
+{% endblock canvas %}
+
+{% block Data_form_import %}
+{% for cell in adv_list.1.data_form %}
+<div>
+    {% if cell.product_image.main_image %}
+    <img src="{{cell.product_image.Product_image.url}}"></img>
+    </br>
+    <a>{{cell.product_borad.product_name}}</a>
+    {% endif %}
+</div>
+{% endfor %}
+{% endblock Data_form_import %}
