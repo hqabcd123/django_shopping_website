@@ -2,7 +2,7 @@ from curses.textpad import rectangle
 import random
 import string
 from time import timezone
-from urllib import response
+from urllib import request, response
 from venv import create
 from django.shortcuts import render,HttpResponse
 from django.http.response import JsonResponse
@@ -196,3 +196,24 @@ def add_product(request):
             set_of_product_type = product_type_set,
         )
         return HttpResponseRedirect('GUI_test/') #render(request, 'app/product/product_listup_page.html', locals())
+
+
+def adv_page(request):
+    if request.method == 'POST':
+        data_form = []
+        print('POST')
+        print(request.POST)
+        value = request.POST['value']
+        adv = advertise.objects.get(head=value)
+        code = adv.product_set.code
+        for data in product_set.objects.all():
+            if data.code == code:
+                print(data.product_code.product_code)
+                data_form.append({'product_code': data.product_code.product_code})
+        for data in data_form:
+            print(data['product_code'])
+            product_borad.objects.get(product_code=data['product_code'])
+
+    elif request.method == 'GET':
+        print('GET')
+    return render(request, 'app/adv_page.html')

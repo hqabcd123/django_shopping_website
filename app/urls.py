@@ -31,5 +31,7 @@ urlpatterns = [
     path('add_product/GUI_test/', views.GUI_test),
     path('login/GUI_test/Save_canvas/', views.Save_canvas),
 
+    path('GUI_test/adv_page/', views.adv_page, name='adv_page'),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,4 +1,5 @@
 {% extends 'app/base.html' %}
+{% load static %}
 {% comment %} <!DOCTYPE html>
 {% load static %}
 {% include "app/Components/bootstrap.html" %}
@@ -72,13 +73,15 @@
   <div class="carousel-inner">
     {% for cell in adv %}
       {% if forloop.first %}
-      <div class="item active">
-        <img src="{{cell.adv_image.url}}"></img>
-      </div>
+        <div class="item active">
+          <img src="{{cell.adv_image.url}}" alt="{{cell.head}}"></img>
+        </div>
+    </form>
       {% else %}
-      <div class="item">
-        <img src="{{cell.adv_image.url}}"></img>
-      </div>
+        <div class="item">
+          <img src="{{cell.adv_image.url}}" alt="{{cell.head}}"></img>
+        </div>
+    </form>
       {% endif %}
     {% endfor %}
   </div>
@@ -92,6 +95,7 @@
     <span class="glyphicon glyphicon-chevron-right"></span>
     <span class="sr-only">Next</span>
   </a>
+  <script type="text/javascript" src={% static "./js/slider_ajax.js" %}></script>
 </div>
 
 
