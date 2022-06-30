@@ -98,23 +98,6 @@
   <script type="text/javascript" src={% static "./js/slider_ajax.js" %}></script>
 </div>
 
-
-
-  {% comment %} <div class="adv_slider">
-    {% for cell in adv %}
-      <div class="advertise fade">
-        <img src="{{cell.adv_image.url}}"></img>
-      </div>
-    {% endfor %}
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-    <br>
-    <div style="text-align:center">
-      {% for i in adv %}
-      <span class="dot" onclick="currentSlide({{forloop.counter0}})"></span>
-      {% endfor %}
-    </div>
-  </div> {% endcomment %}
 {% endblock advertise %}
 
 {% block image_feedout %}

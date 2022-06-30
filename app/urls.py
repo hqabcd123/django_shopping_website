@@ -33,5 +33,7 @@ urlpatterns = [
 
     path('GUI_test/adv_page/', views.adv_page, name='adv_page'),
 
+    path('product/<slug:url_product_code>', views.product_delta)
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

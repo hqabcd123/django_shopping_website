@@ -1,5 +1,9 @@
 {% extends 'app/base.html' %}
+{% load static %}
 
+{% block head %}
+<link href={%static ".css/product/product.css" %} rel="stylesheet" text="text/css" >
+{% endblock head %}
 {% block title %}  {{adv_list.0.value}} {% endblock title %}
 
 {% block canvas %}
@@ -10,7 +14,7 @@
 
 {% block Data_form_import %}
 {% for cell in adv_list.1.data_form %}
-<div>
+<div class="product_image">
     {% if cell.product_image.main_image %}
     <img src="{{cell.product_image.Product_image.url}}"></img>
     </br>

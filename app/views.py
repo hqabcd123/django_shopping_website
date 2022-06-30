@@ -145,10 +145,12 @@ def product_page(request):
     data = product_image.objects.all()
     for cell in data:
         product = product_code.objects.get(product_code = cell.product_code.product_code)
+        code = product.product_code
         product = product.product_borad_set.all()[0]
         Data_form.append({
             'product_name': product.product_name,
             'Product_image': cell.Product_image,
+            'product_code': code,
         })
     print(Data_form)
     return render(request, 'app/product/product_listup_page.html', locals())
@@ -229,3 +231,17 @@ def adv_page(request):
         adv_list.append({'data_form': data_form})
         print(adv_list)
     return render(request, 'app/adv_page.html', context)
+
+def product_delta(request, url_product_code):
+    code = product_code.objects.get(product_code=url_product_code)
+    product = code.product_borad_set.all()[0]
+    img = code.product_image_set.all()
+    Data_form = {
+        'product_name': product.product_name,
+        'product_image': img,
+        'product': product,
+    }
+    return render(request, 'app/product/product_delta.html', locals())
+
+
+##

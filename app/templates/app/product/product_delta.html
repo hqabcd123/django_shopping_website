@@ -1,0 +1,15 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %} {{product.product_name}} {% endblock title %}
+
+{% block canvas %}
+{% include "app/Components/canvas_javascript.html" %}
+{% endblock canvas %}
+
+{% block Data_form_import %}
+<div>
+    <img src="{{Data_form.product_image.0.Product_image.url}}"></img>
+</div>
+<a> {{Data_form.product.Product_delta}} </a>
+{% endblock Data_form_import %}
