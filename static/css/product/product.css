@@ -1,8 +1,37 @@
+.grid-container
+{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-auto-rows: auto;
+    gap: 50px;
+}
+
+.product_row1
+{
+    position: relative;
+    display: block;
+}
+
+.product_row2
+{
+    position: relative;
+    display: block;
+}
+
+.product_row3
+{
+    position: relative;
+    display: block;
+}
+
+.product_row4
+{
+    position: relative;
+    display: block;
+}
+
 .product_image
 {
     position: relative;
-    width: 20%;
-    display: block;
-    margin: auto;
-
+    width: 100%;
 }

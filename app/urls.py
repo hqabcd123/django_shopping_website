@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('GUI_test/Save_canvas/', views.Save_canvas),
     path('logout/GUI_test/Save_canvas/', views.Save_canvas),
+    path('/Save_canvas/', views.Save_canvas),
 
     path('GUI_test/userpage/', views.userpage, name='userpage'),
 

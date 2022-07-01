@@ -7,13 +7,17 @@ from django import forms
 from django.forms import ModelForm
 import datetime
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
+import random
+import string
 
 
 # Create your models here.
 
 #------------------------------product page models space---------------------------------------------#
 class product_code(models.Model):
-    product_code = models.TextField(unique=True)
+    product_code = models.TextField(unique=True,
+    default=''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(32)),
+    )
 
     def __str__(self) -> str:
         return self.product_code

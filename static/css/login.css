@@ -1,8 +1,18 @@
+.creed  
+{
+    position: relative;
+    width: 150px;
+    display: block;
+    margin: auto;
+    padding-top: 17%;
+    color: crimson;
+}
+
 .login
 {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
+    position: relative;
+    width: 200px;
+    display: block;
+    margin: auto;
+    /* transform: translate(-50%, -50%) */
 }

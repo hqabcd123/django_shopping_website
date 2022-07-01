@@ -14,21 +14,16 @@
 {% block Data_form_import %}
 
 {% if perms.product_borad.can_add %}<a href="{% url 'add_product' %}">Click here to add product</a>{% endif %}
-<div>
-  <p>List product: </p>
+
+<p>List product: </p>
+<div class="grid-container">
   {% for data in Data_form %}
-  <a href="./{{data.product_code}}">
-    <img class="product_image" src="{{data.Product_image.url}}"></img>
-  </a>
-  <p>{{data.product_name}}</p>
-    {% comment %} 
-    <form action=" {%url 'GUI_test'%} " method="post" id="form{{forloop.counter0}}">{% csrf_token %}
-      <a>Saved canvas: </a><a href="JavaScript:;" onclick="document.getElementById('form{{forloop.counter0}}').submit();">{{data.Save_code}}</a>
-      <input type="hidden" name="save_code" value="{{data.Save_code}}"/>
-      <br/>
-      <div><img src="{{data.saved_image.url}}"></img></div> 
-      {% endcomment %}
-    </form>
+  <div class="product_{% cycle 'row1' 'row2' 'row3' 'row4' %}">
+    <a href="./{{data.product_code}}">
+      <img class="product_image" src="{{data.Product_image.url}}"></img>
+    </a>
+    <p>{{data.product_name}}</p>
+  </div>
   {% endfor %}
 </div>
 
