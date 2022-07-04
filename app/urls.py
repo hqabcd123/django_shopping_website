@@ -12,9 +12,10 @@ urlpatterns = [
 
     path('GUI_test/Save_canvas/', views.Save_canvas),
     path('logout/GUI_test/Save_canvas/', views.Save_canvas),
-    path('/Save_canvas/', views.Save_canvas),
 
     path('GUI_test/userpage/', views.userpage, name='userpage'),
+    path('userpage_canvas/', views.userpage_canvas),
+
 
     path('login/GUI_test/', views.GUI_test),
     path('login/', views.login, name='login'),
@@ -34,7 +35,7 @@ urlpatterns = [
 
     path('GUI_test/adv_page/', views.adv_page, name='adv_page'),
 
-    path('product/<slug:url_product_code>', views.product_delta)
+    path('product/<slug:url_product_code>', views.product_delta),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

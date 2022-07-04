@@ -1,0 +1,26 @@
+.product-image
+{
+    position: relative;
+    width: 50%;
+    display: block;
+}
+
+.prodcut-borad
+{
+    position: relative;
+    width: 100%;
+    display: block;
+}
+
+.username
+{
+    position: relative;
+    display: block;
+    color: blueviolet;
+}
+
+.product_delta
+{
+    position: relative;
+    display: block;
+}

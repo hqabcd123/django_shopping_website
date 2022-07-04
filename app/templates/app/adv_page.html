@@ -16,7 +16,9 @@
 {% for cell in adv_list.1.data_form %}
 <div class="product_image">
     {% if cell.product_image.main_image %}
-    <img src="{{cell.product_image.Product_image.url}}"></img>
+    <a href="/product/{{cell.product_borad.product_code}}">
+        <img src="{{cell.product_image.Product_image.url}}"></img>
+    </a>
     </br>
     <a>{{cell.product_borad.product_name}}</a>
     {% endif %}

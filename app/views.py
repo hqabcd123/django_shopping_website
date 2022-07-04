@@ -60,7 +60,22 @@ def GUI_test(request):
         return render(request, 'app/GUI_test.html', locals())
 
 #get in User setting and canvas saving page
+
 def userpage(request):
+    Data_form = []
+    username = request.user.username
+    user = User.objects.get(username=username)
+    history = user_history_set.objects.all()
+    for cell in history:
+        if cell.username == username:
+            Data_form.append({
+                'history': cell.foodprint_set
+            })
+    print(Data_form)
+    print(user)
+    return render(request, 'app/userpage.html', locals())
+
+def userpage_canvas(request):
     Data_form = []
     username = request.user.username
     data = diagram.objects.all()
@@ -70,7 +85,7 @@ def userpage(request):
         if cell.username == username:
             Data_form.append({'Save_code': cell.Save_code, 'saved_image': cell.saved_image})
     print(Data_form)
-    return render(request, 'app/userpage.html', locals())
+    return render(request, 'app/userpage_canvas.html', locals())
 
 
 #get in Login
@@ -233,14 +248,26 @@ def adv_page(request):
     return render(request, 'app/adv_page.html', context)
 
 def product_delta(request, url_product_code):
+    print(url_product_code)
     code = product_code.objects.get(product_code=url_product_code)
     product = code.product_borad_set.all()[0]
     img = code.product_image_set.all()
+    board = code.discuss_borad_set.all()
     Data_form = {
         'product_name': product.product_name,
         'product_image': img,
         'product': product,
+        'board': board,
     }
+    username = request.user.username
+    if username:
+        history = user_history.objects.create(
+            foodprint = product
+        )
+        history = user_history_set.objects.create(
+            foodprint_set = history,
+            username = username
+        )
     return render(request, 'app/product/product_delta.html', locals())
 
 

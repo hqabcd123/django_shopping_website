@@ -1,27 +1,29 @@
-<!DOCTYPE html>
+
+{% extends 'app/base.html' %}
 {% load static %}
-{% include "app/Components/bootstrap.html" %}
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    {% include "app/Components/canvas_link.html" %}
-  </head>
-  <body>
-    {% include "app/Components/navbar.html" %}
-    {% include "app/Components/GUI_window_navbar.html" %}
-    {% if perms.product_borad.can_add %}
-    {% endif %}
-    <div>
-      {% for data in Data_form %}
-        <form action=" {%url 'GUI_test'%} " method="post" id="form{{forloop.counter0}}">{% csrf_token %}
-          <a>Saved canvas: </a><a href="JavaScript:;" onclick="document.getElementById('form{{forloop.counter0}}').submit();">{{data.Save_code}}</a>
-          <input type="hidden" name="save_code" value="{{data.Save_code}}"/>
-          <br/>
-          <div><img src="{{data.saved_image.url}}"></img></div>
-        </form>
-      {% endfor %}
-    </div>
-    {% include "app/Components/canvas_javascript.html" %}
-  </body>
-</html>
+
+{% block head %}
+<link href={%static "./css/product/product.css" %} rel="stylesheet" text="text/css" >
+{% endblock head %}
+
+{% block title %} {{user.username}} {% endblock title %}
+
+{% block canvas %}
+{% include "app/Components/canvas_javascript.html" %}
+{% endblock canvas %}
+
+{% block Data_form_import %}
+<div class="profile_image">
+    <img src="{{user.profile_image.url}}"></img>
+</div>
+<a href="/userpage_canvas/">{{user.username}}: canvas</a>
+<div class="user-History">
+    <a>History</a>
+    </br>
+    {% for cell in Data_form %}
+    <a>Click time: {{cell.history.click_date}} </a>
+    <a href="/product/{{cell.history.foodprint.product_code}}"> {{cell.history.foodprint.product_name}} </a>
+    </br>
+    {%endfor%}
+</div>
+{% endblock Data_form_import %}

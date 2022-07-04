@@ -3,13 +3,28 @@
 
 {% block title %} {{product.product_name}} {% endblock title %}
 
+{% block head %}
+<link href={%static "./css/product/product_delta.css" %} rel="stylesheet" text="text/css" >
+{% endblock head %}
+
 {% block canvas %}
 {% include "app/Components/canvas_javascript.html" %}
 {% endblock canvas %}
 
 {% block Data_form_import %}
 <div>
-    <img src="{{Data_form.product_image.0.Product_image.url}}"></img>
+    <img class="product-image" src="{{Data_form.product_image.0.Product_image.url}}"></img>
 </div>
 <a> {{Data_form.product.Product_delta}} </a>
+
+{% for command in Data_form.board %}
+<div class="product-borad">
+    <a>User: </a>
+    <a class="username">{{command.username}}</a>
+    </br>
+    <a>Command: </a>
+    <a class="command">{{command.command}}</a>
+</div>
+{% endfor %}
+
 {% endblock Data_form_import %}

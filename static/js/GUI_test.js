@@ -130,7 +130,7 @@ function Send_data()
     var img = converse_image($(canvasObj.canvas)[0]);
     $.ajax({
         method:"POST",
-        url: "Save_canvas/",
+        url: "/GUI_test/Save_canvas/",
         //contentType: 'multipart/form-data',
         processData: false,
         contentType: false,
@@ -149,7 +149,7 @@ function Send_data()
             var Save_code = data["Save_code"]
             $.ajax({
                 method:"POST",
-                url: "Save_canvas/",
+                url: "/GUI_test/Save_canvas/",
                 data: {
                     "line":JSON.stringify(diagramObj.line),
                     "circle":JSON.stringify(diagramObj.circle),
@@ -174,7 +174,7 @@ function Send_data()
                     }
                     else
                     {
-                        window.location.href = "GUI_test"
+                        window.location.href = "/GUI_test/"
                     }
                 },
                 error: function(data){

@@ -1,0 +1,31 @@
+
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block head %}
+<link href={%static "./css/product/product.css" %} rel="stylesheet" text="text/css" >
+{% endblock head %}
+
+{% block title %}TITLE{% endblock title %}
+
+{% block canvas %}
+{% include "app/Components/canvas_javascript.html" %}
+{% endblock canvas %}
+
+{% block Data_form_import %}
+{% if perms.product_borad.can_add %}
+    {% endif %}
+    <div class='grid-container'>
+      {% for data in Data_form %}
+      <div class="product_{% cycle 'row1' 'row2' 'row3' 'row4' %}">
+        <form action=" {%url 'GUI_test'%} " method="post" id="form{{forloop.counter0}}">{% csrf_token %}
+          <a>Saved canvas: </a><a href="JavaScript:;" onclick="document.getElementById('form{{forloop.counter0}}').submit();">{{data.Save_code}}</a>
+          <input type="hidden" name="save_code" value="{{data.Save_code}}"/>
+          <br/>
+          <div><img class="product_image" src="{{data.saved_image.url}}"></img></div>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+
+{% endblock Data_form_import %}

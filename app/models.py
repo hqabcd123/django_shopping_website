@@ -60,7 +60,7 @@ class discuss_borad(models.Model):#which is being to write command on the produc
     command = models.TextField(default=' ')
 
     def __str__(self) -> str:
-        return self.username + ' ' + self.command
+        return 'username: ' + self.username + ' ' + self.command + ' product code : ' + self.product_code.product_code
 
 class product_borad(models.Model):#Whole product's big picture
     product_name = models.TextField()
@@ -127,12 +127,16 @@ class advertise(models.Model):
 
 class user_history(models.Model):
     foodprint = models.ForeignKey(product_borad, on_delete=models.CASCADE, default=False)
+    click_date = models.DateTimeField(default=datetime.datetime.now(), help_text='create date: ')
+    def __str__(self) -> str:
+        return self.foodprint.product_name
 
 class user_history_set(models.Model):
     foodprint_set = models.ForeignKey(user_history, on_delete=models.CASCADE, default=False)
+    username = models.CharField(max_length=30, default='admin')
 
     def __str__(self) -> str:
-        return str(self.foodprint_set.foodprint)
+        return self.username + ': ' + str(self.foodprint_set.foodprint)
 
 class User_Manager(BaseUserManager):
     def create_user(self, email, username, password=None):
