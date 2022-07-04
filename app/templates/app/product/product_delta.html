@@ -19,11 +19,13 @@
 
 {% for command in Data_form.board %}
 <div class="product-borad">
+    {% if command.username != None %}
     <a>User: </a>
     <a class="username">{{command.username}}</a>
     </br>
     <a>Command: </a>
     <a class="command">{{command.command}}</a>
+    {% endif %}
 </div>
 {% endfor %}
 

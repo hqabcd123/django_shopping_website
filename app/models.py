@@ -2,6 +2,7 @@ from distutils.command.upload import upload
 from email.policy import default
 from pyexpat import model
 from tkinter import CASCADE
+from tkinter.messagebox import NO
 from django.db import models
 from django import forms
 from django.forms import ModelForm
@@ -54,13 +55,13 @@ class product_image(models.Model):
         return self.product_code.product_code
 
 class discuss_borad(models.Model):#which is being to write command on the product page
-    username = models.CharField(default=' ', max_length=20)
+    username = models.CharField(default=None, max_length=20, blank=True, null=True)
     product_code = models.ForeignKey(product_code, on_delete=models.CASCADE, default=False)
     post_date = models.DateTimeField(default=datetime.datetime.now(), help_text='create date: ')
-    command = models.TextField(default=' ')
+    command = models.TextField(default=None, blank=True, null=True)
 
     def __str__(self) -> str:
-        return 'username: ' + self.username + ' ' + self.command + ' product code : ' + self.product_code.product_code
+        return 'username: ' + str(self.username) + ' ' + str(self.command) + ' product code : ' + self.product_code.product_code
 
 class product_borad(models.Model):#Whole product's big picture
     product_name = models.TextField()
