@@ -68,7 +68,6 @@ class product_borad(models.Model):#Whole product's big picture
     Create_Date = models.DateTimeField(default=datetime.datetime.now(), help_text='create date: ')
     Product_delta = models.TextField()
     Product_image = models.ForeignKey(product_images_album, related_name='image', on_delete=models.CASCADE, default=False)
-    #Product_image = models.ForeignKey(product_image, related_name='image', on_delete=models.CASCADE, default=False)
     User_command = models.ForeignKey(discuss_borad, related_name='user', on_delete=models.CASCADE, default=False)
     set_of_product_type = models.ForeignKey(set_of_product_type, on_delete=models.CASCADE, default=False)
 
