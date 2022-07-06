@@ -2,11 +2,37 @@ import sqlite3
 from numpy import product
 import pandas as pd
 
+class user_history_class():
+
+    def __init__(self, *args, **kwargs) -> None:
+        self.userdata = []
+        print(args[0])
+        self.temp = args[0]
+        pass
+
+    def count_history(self):
+        for cell in self.temp:
+            if cell['username'] in self.userdata:
+                self.userdata = cell['username']
+            else:
+                
+                self.userdata.append({
+                    'username': cell['username'],
+                    #
+                })
+        pass
+
+def link_string(*args) -> str :
+    temp = ''
+    for data in args:
+        temp += '{}, '.format(data)
+    return temp
 
 username = []
 history = []
 product_borad = []
 Data = []
+user_history = []
 
 
 con = sqlite3.connect('../db.sqlite3')
@@ -37,16 +63,37 @@ for cell in product_borad:
     ):
         Data.append({
             'username': cell['username'],
-            'prodcut_name': row[0],
+            'product_name': row[0],
             'product_code_id': row[1],
         })
 print(Data)
 
 for cell in Data:
     for row in cursor.execute(
-        " SELECT set_of_product_type FROM app_set_of_product_type WHERE product_code_id = '{}' ".format(cell['product_code_id'])
+        " SELECT set_of_product_type_id FROM app_set_of_product_type WHERE product_code_id = '{}' ".format(cell['product_code_id'])
     ):
-        print(row)
+        for i in cursor.execute(
+            " SELECT product_type FROM app_product_type WHERE id = '{}' ".format(row[0])
+        ):
+            print(' username: {} click product : {} \n which is {} '.format(
+                cell['username'], cell['product_name'], i[0]
+            ))
+            user_history.append({
+                'username': cell['username'],
+                'product_name': cell['product_name'],
+                'product_type': i,
+            })
 
+del(username, product_borad, Data)
+temp = user_history_class(user_history)
 
 con.close()
+
+con = sqlite3.connect('./userdata.db')
+cursor = con.cursor()
+
+str1 = link_string('shoes', 'range', 'pants', 'shirt')
+
+cursor.execute(
+    " CREATE TABLE IF NOT EXISTS userdata(username, prodcut_name, {} ) ".format(str1)
+)
