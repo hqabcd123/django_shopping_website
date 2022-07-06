@@ -25,7 +25,8 @@ class user_history_class():
 def link_string(*args) -> str :
     temp = ''
     for data in args:
-        temp += '{}, '.format(data)
+        temp += '{} varchar(50), '.format(data)
+    temp = temp[:-2]
     return temp
 
 username = []
@@ -93,7 +94,15 @@ con = sqlite3.connect('./userdata.db')
 cursor = con.cursor()
 
 str1 = link_string('shoes', 'range', 'pants', 'shirt')
+print(str1)
 
 cursor.execute(
-    " CREATE TABLE IF NOT EXISTS userdata(username, prodcut_name, {} ) ".format(str1)
+    " CREATE TABLE IF NOT EXISTS userdata(username varchar(50), prodcut_name varchar(50), {} ) ".format(str1)
 )
+
+table = cursor.execute(
+    " SELECT * FROM userdata "
+)
+name = list(map(lambda x: x[0], cursor.description))#get the column name from table
+print(table.fetchall())
+print(name)
