@@ -1,10 +1,10 @@
+from logging import error
 import sqlite3
 
 class user_history_class():
 
     def __init__(self, *args, **kwargs) -> None:
         self.userdata = []
-        print(args[0])
         self.temp = args[0]
         self.count_history()
         pass
@@ -15,7 +15,7 @@ class user_history_class():
                 self.userdata = cell['username']
             else:
                 self.userdata.append({
-                    '1.username': cell['click_date'],
+                    '1.click_date': cell['click_date'],
                     '2.username': cell['username'],
                     '3.product_name': cell['product_name'],
                     '4.product_type': list(cell['product_type']),
@@ -49,7 +49,6 @@ class order_dict_list():
     
     def sort_dict(self):
         ind = self.index
-        print('ind: ' + str(ind))
         for i in range(len(ind)-1):
             for j in range(len(ind)-i-1):
                 if int(ind[j][0]) > int(ind[j+1][0]):
@@ -83,7 +82,6 @@ def to_db():
 
     for row in cursor.execute('SELECT username FROM app_user'):
         username.append(row)
-        print(row)
 
     for name in username:
         for row in cursor.execute( "SELECT foodprint_set_id FROM app_user_history_set WHERE username = '{}' ".format(name[0])):
@@ -110,7 +108,6 @@ def to_db():
                 'product_name': row[0],
                 'product_code_id': row[1],
             })
-    print(Data)
 
     for cell in Data:
         for row in cursor.execute(
@@ -119,9 +116,6 @@ def to_db():
             for i in cursor.execute(
                 " SELECT product_type FROM app_product_type WHERE id = '{}' ".format(row[0])
             ):
-                print(' username: {} click product : {} \n which is {} '.format(
-                    cell['username'], cell['product_name'], i[0]
-                ))
                 user_history.append({
                     'click_date': cell['click_date'],
                     'username': cell['username'],
@@ -137,22 +131,27 @@ def to_db():
     con = sqlite3.connect('./userdata.db')
     cursor = con.cursor()
     sql =  " CREATE TABLE IF NOT EXISTS userdata "
-    sql += "(click_date datetime, username varchar(100), product_name varchar(400), product_type longtext ) "
+    sql += "(id int, click_date datetime, username varchar(100), product_name varchar(400), product_type longtext ) "
 
     cursor.execute(sql)
+    
+    id = 0
     for row in cursor.execute(" SELECT * FROM userdata "):
-        temp.append(row)
+        id += 1
     #name = list(map(lambda x: x[0], cursor.description))#get the column name from table
-
-    dict_userdata = user_data.get_userdata()
-
+    
+    print('id: ' + str(id))
+    dict_userdata = user_data.get_userdata()[id:]
+    
     for row in dict_userdata:
         order = order_dict_list(row)
         parma = order.get_list_of_dict()
         parma = tuple(parma)  #','.join(parma)
+        parma = (id,) + parma
         print(parma)
-        sql = "  INSERT INTO userdata VALUES (?, ?, ?, ?) "
+        sql = "  INSERT INTO userdata VALUES (?, ?, ?, ?, ?) "
         cursor.execute(sql, parma)
+        id += 1
     con.commit()
 
     con.close()
