@@ -35,11 +35,25 @@ class user_data():
         pass
     
     def count_product_type(self):
+        count = []
+        print(self.data)
         for user in self.data:
-            for k, v in user.items():
-                print(' key: {}, value {} '.format(k, v))
-                #v['product_name']
+            index = user['data']['product_name']
+            for data in index:
+                for cell in count:
+                    if data not in cell:
+                        count.append({
+                            count[data]: 1,
+                            count['username']:  user['username']
+                        })
+                        pass
+                    else:
+                        count[data] = count[data] + 1
+                        pass
+                    pass
                 pass
+            pass
+        print(count)
         pass
 
 db.to_db()
