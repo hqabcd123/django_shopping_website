@@ -66,73 +66,68 @@ class user_data():
             self.user.append(dict)
         pass
     
-    def get_user_data(self):
-        return self.user
+    def list_to_dict(self, user1):
+        user = user1
+        for i in user:
+            for username, data in i.items():
+                for product in data:
+                    temp = []
+                    temp_key = ''
+                    for j in range(len(data[product])):
+                        if j%2 == 0:
+                            temp_key = data[product][j]
+                        else:
+                            temp.append({
+                                temp_key :data[product][j]
+                            })
+                            temp_key = ''
+                    #print(temp)
+                    data[product] = temp
     
     
-    
-def sepraite_dict(user):
-    """set all type of dict to a unit column
+    def sepraite_dict(self):
+        """set all type of dict to a unit column
 
-    Returns:
-        list: Now self.user is calling by reference so want we change it
-        it change 
-    """
-    
-    param_product_name = {
-        'username': [],
-    }
-    param_product_type = {
-        'username': [],
-    }
-    print('####'*40)
-    print(user)
-    list_to_dict(user)
-    print(user)
-    print('####'*40)
-    for u in user:
-        for username, data in u.items():
-            param_product_name['username'].append(username)
-            param_product_type['username'].append(username)
-            for i in data['product_name']:
-                for k, v in i.items():
-                    if k not in param_product_name:
-                        print(' product: {} '.format(k))
-                        param_product_name[k] = []
-            for i in data['product_type']:
-                for k, v in i.items():
-                    if k not in param_product_type:
-                        param_product_type[k] = []
-                        
-        for username, data in u.items():
-            for product in param_product_name:
-                print(product)
-            
-            
-    print(param_product_name)
-    
-    return param_product_name
+        Returns:
+            list: Now self.user is calling by reference so want we change it
+            it change 
+        """
+        user = self.user
+        param_product_name = {
+            'username': [],
+        }
+        param_product_type = {
+            'username': [],
+        }
+        print('####'*40)
+        print(self.user)
+        self.list_to_dict(user)
+        print(self.user)
+        print('####'*40)
+        for u in user:
+            for username, data in u.items():
+                param_product_name['1.username'].append(username)
+                param_product_type['1.username'].append(username)
+                for i in data['product_name']:
+                    for k, v in i.items():
+                        if k not in param_product_name:
+                            print(' product: {} '.format(k))
+                            param_product_name[k] = []
+                for i in data['product_type']:
+                    for k, v in i.items():
+                        if k not in param_product_type:
+                            param_product_type[k] = []
+                            
+            for username, data in u.items():
+                print('username: {} '.format(username))
+                for product in param_product_name:
+                    print(product)
+                
+                
+        print(param_product_name)
+        
+        return param_product_name
 
-
-def list_to_dict(user1):
-    user = user1
-    for i in user:
-        for username, data in i.items():
-            for product in data:
-                temp = []
-                temp_key = ''
-                for j in range(len(data[product])):
-                    if j%2 == 0:
-                        temp_key = data[product][j]
-                    else:
-                        temp.append({
-                            temp_key :data[product][j]
-                        })
-                        temp_key = ''
-                #print(temp)
-                data[product] = temp
-    
-    
 db.to_db()
 
 """
@@ -158,9 +153,8 @@ user = user_data()
 for row in cursor.execute(" SELECT * FROM userdata "):
     user.set_data(row)
 user.count_product_type()
-dic = user.user
-dic = sepraite_dict(dic)
-print(user.user)
-df = pd.DataFrame(dic)
+user.sepraite_dict()
+
+df = pd.DataFrame(user)
 print('===================================================')
 print(df)
