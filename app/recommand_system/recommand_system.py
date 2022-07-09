@@ -111,7 +111,6 @@ class user_data():
                 for i in data['product_name']:
                     for k, v in i.items():
                         if k not in param_product_name:
-                            print(' product: {} '.format(k))
                             param_product_name[k] = []
                 for i in data['product_type']:
                     for k, v in i.items():
@@ -121,18 +120,19 @@ class user_data():
             for username, data in u.items():
                 for i in data['product_name']:
                     for k, v in i.items():
+                        print(' username: {}, k: {} '.format(username, k))
                         if k in param_product_name:
-                            param_product_name[k] = v
+                            param_product_name[k].append(v)
                         else:
-                            param_product_name[k] = 0
+                            param_product_name[k].append(0)
                             
             for username, data in u.items():
                 for i in data['product_type']:
                     for k, v in i.items():
                         if k in param_product_name:
-                            param_product_type[k] = v
+                            param_product_type[k].append(v)
                         else:
-                            param_product_type[k] = 0
+                            param_product_type[k].append(0)
         print(param_product_name)
         
         return param_product_name
