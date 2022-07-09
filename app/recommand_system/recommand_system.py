@@ -106,8 +106,8 @@ class user_data():
         print('####'*40)
         for u in user:
             for username, data in u.items():
-                param_product_name['1.username'].append(username)
-                param_product_type['1.username'].append(username)
+                param_product_name['username'].append(username)
+                param_product_type['username'].append(username)
                 for i in data['product_name']:
                     for k, v in i.items():
                         if k not in param_product_name:
@@ -119,11 +119,20 @@ class user_data():
                             param_product_type[k] = []
                             
             for username, data in u.items():
-                print('username: {} '.format(username))
-                for product in param_product_name:
-                    print(product)
-                
-                
+                for i in data['product_name']:
+                    for k, v in i.items():
+                        if k in param_product_name:
+                            param_product_name[k] = v
+                        else:
+                            param_product_name[k] = 0
+                            
+            for username, data in u.items():
+                for i in data['product_type']:
+                    for k, v in i.items():
+                        if k in param_product_name:
+                            param_product_type[k] = v
+                        else:
+                            param_product_type[k] = 0
         print(param_product_name)
         
         return param_product_name
@@ -155,6 +164,6 @@ for row in cursor.execute(" SELECT * FROM userdata "):
 user.count_product_type()
 user.sepraite_dict()
 
-df = pd.DataFrame(user)
-print('===================================================')
-print(df)
+# df = pd.DataFrame(user)
+# print('===================================================')
+# print(df)
