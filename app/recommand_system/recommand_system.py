@@ -1,7 +1,9 @@
-
+import numpy as np
+from distutils.log import error
 import pandas as pd
 import userdata_to_db as db
 import sqlite3
+from sklearn.metrics.pairwise import paired_distances,cosine_similarity
 
 
 
@@ -62,7 +64,6 @@ class user_data():
                     'product_type': product_type,
                 }
             }
-            print(dict)
             self.user.append(dict)
         pass
     
@@ -99,11 +100,7 @@ class user_data():
         param_product_type = {
             'username': [],
         }
-        print('####'*40)
-        print(self.user)
         self.list_to_dict(user)
-        print(self.user)
-        print('####'*40)
         for u in user:
             for username, data in u.items():
                 param_product_name['username'].append(username)
@@ -116,26 +113,46 @@ class user_data():
                     for k, v in i.items():
                         if k not in param_product_type:
                             param_product_type[k] = []
-                            
+        
+        for u in user:                    
             for username, data in u.items():
+                temp = []
                 for i in data['product_name']:
                     for k, v in i.items():
-                        print(' username: {}, k: {} '.format(username, k))
-                        if k in param_product_name:
-                            param_product_name[k].append(v)
-                        else:
-                            param_product_name[k].append(0)
-                            
+                        ###################################################################################
+                        param_product_name[k].append(v)
+                        temp.append(k)
+                for k in param_product_name:
+                    if k not in temp and k != 'username':
+                        param_product_name[k].append(0)
+                        temp.append(k)
+        for u in user:                    
             for username, data in u.items():
+                temp = []
                 for i in data['product_type']:
                     for k, v in i.items():
-                        if k in param_product_name:
-                            param_product_type[k].append(v)
-                        else:
-                            param_product_type[k].append(0)
+                        ###################################################################################
+                        param_product_type[k].append(v)
+                        temp.append(k)
+                for k in param_product_type:
+                    if k not in temp and k != 'username':
+                        param_product_type[k].append(0)
+                        temp.append(k)                    
+            
         print(param_product_name)
         
-        return param_product_name
+        return [param_product_name, param_product_type]
+
+def create_matrix(list):
+    temp = []
+    product = {}
+    for row in list:
+        temp.append(row[1])
+        pass
+    product['product_type'] = temp
+    for row in list:
+        if row[1] not in temp:
+
 
 db.to_db()
 
@@ -149,7 +166,7 @@ db.to_db()
 
 """
 
-
+product_type = []
 con = sqlite3.connect('./userdata.db')
 cursor = con.cursor()
 cursor.execute(" SELECT * FROM userdata ")
@@ -160,10 +177,21 @@ print(name)
 user = user_data()
 
 for row in cursor.execute(" SELECT * FROM userdata "):
+    print('row: {} '.format(row))
     user.set_data(row)
-user.count_product_type()
-user.sepraite_dict()
+    
+for row in cursor.execute(" SELECT product_name, product_type FROM product_type "):
+    print('row: {} '.format(row))
+    product_type.append([row[0], row[1]])
 
-# df = pd.DataFrame(user)
-# print('===================================================')
-# print(df)
+con.close()
+user.count_product_type()
+user = user.sepraite_dict()
+
+df = pd.DataFrame(user[1])
+user_vec = df.groupby('username').mean()
+
+print('===='*40)
+print(df)
+print(user_vec)
+print('===='*40)

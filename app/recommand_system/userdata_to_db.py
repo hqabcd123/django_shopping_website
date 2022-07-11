@@ -74,6 +74,7 @@ def to_db():
     Data = []
     user_history = []
     temp = []
+    product_type = []
 
 
     con = sqlite3.connect('../../db.sqlite3')
@@ -108,6 +109,7 @@ def to_db():
                 'product_name': row[0],
                 'product_code_id': row[1],
             })
+            temp.append(row[0])
 
     for cell in Data:
         for row in cursor.execute(
@@ -122,17 +124,27 @@ def to_db():
                     'product_name': cell['product_name'],
                     'product_type': i,
                 })
+                product_type.append(i)
 
     del(username, product_borad, Data)
     user_data = user_history_class(user_history)
-
+    temp1 = []
+    for i in range(len(temp)):
+        temp1.append([temp[i], product_type[i]])
+    product_type = temp1
+    del(temp, temp1)
+    print(product_type)
     con.close()
 
     con = sqlite3.connect('./userdata.db')
     cursor = con.cursor()
     sql =  " CREATE TABLE IF NOT EXISTS userdata "
     sql += "(id int, click_date datetime, username varchar(100), product_name varchar(400), product_type longtext ) "
-
+    cursor.execute(sql)
+    sql = " DROP TABLE product_type "
+    cursor.execute(sql)
+    sql =  " CREATE TABLE IF NOT EXISTS product_type "
+    sql += "(id int, product_name varchar(400), product_type longtext ) "
     cursor.execute(sql)
     
     id = 0
@@ -153,5 +165,22 @@ def to_db():
         cursor.execute(sql, parma)
         id += 1
     con.commit()
+    
+    for i in range(len(product_type)):
+        temp = []
+        for row in product_type[i][1]:
+            temp.append(row)
+        product_type[i][1] = '|'.join(temp)
+    print(product_type)
+    id = 0
+    for row in product_type:
+        sql = " INSERT INTO product_type VALUES (?, ?, ?) "
+        parma = tuple(row)
+        parma = (id,) + parma
+        cursor.execute(sql, parma)
+        id += 1
+    con.commit()
+        
+        
 
     con.close()
