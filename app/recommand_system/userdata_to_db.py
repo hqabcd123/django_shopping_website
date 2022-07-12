@@ -109,7 +109,6 @@ def to_db():
                 'product_name': row[0],
                 'product_code_id': row[1],
             })
-            temp.append(row[0])
 
     for cell in Data:
         for row in cursor.execute(
@@ -124,15 +123,25 @@ def to_db():
                     'product_name': cell['product_name'],
                     'product_type': i,
                 })
-                product_type.append(i)
-
+    
+    temp2 = []
+    for row in cursor.execute(" SELECT product_name, product_code_id FROM app_product_borad "):
+        temp2.append(row)
+    for i in temp2:
+        for row in cursor.execute(
+            " SELECT set_of_product_type_id FROM app_set_of_product_type WHERE product_code_id = {} ".format(i[1])
+        ):
+            for j in cursor.execute(
+                " SELECT product_type FROM app_product_type WHERE id = {} ".format(row[0])
+            ):
+                product_type.append([i[0], j])
     del(username, product_borad, Data)
     user_data = user_history_class(user_history)
     temp1 = []
-    for i in range(len(temp)):
-        temp1.append([temp[i], product_type[i]])
+    for i in range(len(product_type)):
+        temp1.append(product_type[i])
     product_type = temp1
-    del(temp, temp1)
+    del(temp, temp1, temp2)
     print(product_type)
     con.close()
 
@@ -165,6 +174,8 @@ def to_db():
         cursor.execute(sql, parma)
         id += 1
     con.commit()
+    
+    
     
     for i in range(len(product_type)):
         temp = []

@@ -144,14 +144,25 @@ class user_data():
         return [param_product_name, param_product_type]
 
 def create_matrix(list):
-    temp = []
-    product = {}
+    product = {
+        'product_name':[],
+    }
+    print('#################create matrix#################')
+    print('===='*40)
     for row in list:
-        temp.append(row[1])
+        product[row[1]] = []
+        product['product_name'].append(row[0])
         pass
-    product['product_type'] = temp
-    for row in list:
-        if row[1] not in temp:
+    for key in product:
+        for row in list:
+            temp_str = ''
+            if row[1] != key and key != 'product_name':
+                product[key].append(0)
+            elif row[1] == key and key != 'product_name':
+                product[key].append(1)
+                
+    return product
+        
 
 
 db.to_db()
@@ -177,7 +188,6 @@ print(name)
 user = user_data()
 
 for row in cursor.execute(" SELECT * FROM userdata "):
-    print('row: {} '.format(row))
     user.set_data(row)
     
 for row in cursor.execute(" SELECT product_name, product_type FROM product_type "):
@@ -190,8 +200,14 @@ user = user.sepraite_dict()
 
 df = pd.DataFrame(user[1])
 user_vec = df.groupby('username').mean()
+product_type = create_matrix(product_type)
+print(product_type)
+product_vec = pd.DataFrame(product_type)
+product_vec = product_vec.groupby('product_name').mean()
+
 
 print('===='*40)
 print(df)
 print(user_vec)
+print(product_vec)
 print('===='*40)
