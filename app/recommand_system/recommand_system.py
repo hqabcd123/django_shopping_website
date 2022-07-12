@@ -163,7 +163,12 @@ def create_matrix(list):
                 
     return product
         
-
+def self_cos_similarity(matrix):
+    df = pd.DataFrame(matrix)
+    for i in range(len(matrix)):
+        s = pd.Series(matrix[i])
+        print(df.dot(s))
+    pass
 
 db.to_db()
 
@@ -208,6 +213,8 @@ product_vec = product_vec.groupby('product_name').mean()
 
 print('===='*40)
 print(df)
-print(user_vec)
-print(product_vec)
+print(user_vec.values)
+print(product_vec.values)
+print(self_cos_similarity(user_vec.values))
 print('===='*40)
+# for i in range(len())
