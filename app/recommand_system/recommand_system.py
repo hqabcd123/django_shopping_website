@@ -1,3 +1,4 @@
+from cmath import sqrt
 import numpy as np
 from distutils.log import error
 import pandas as pd
@@ -162,12 +163,27 @@ def create_matrix(list):
                 product[key].append(1)
                 
     return product
-        
+
+def pd_length(*args):
+    sum = 0.0
+    for i in range(len(args)):
+        print(args[i])
+        sum += pow(float(args[i]), 2)
+        pass
+    sum = sqrt(sum)
+    return sum
+
+def pd_distance(matrix):
+    
+    pass
+
 def self_cos_similarity(matrix):
     df = pd.DataFrame(matrix)
     for i in range(len(matrix)):
         s = pd.Series(matrix[i])
+        product = pd_length(df) * pd_length(s)
         print(df.dot(s))
+        print(df.dot(s).div(product))
     pass
 
 db.to_db()
