@@ -166,9 +166,9 @@ def create_matrix(list):
 
 def pd_length(*args):
     sum = 0.0
-    for i in range(len(args)):
-        print(args[i])
-        sum += pow(float(args[i]), 2)
+    print('===='*40)
+    for i in range(len(args[0])):
+        sum += pow(args[0][i], 2)
         pass
     sum = sqrt(sum)
     return sum
@@ -181,9 +181,9 @@ def self_cos_similarity(matrix):
     df = pd.DataFrame(matrix)
     for i in range(len(matrix)):
         s = pd.Series(matrix[i])
-        product = pd_length(df) * pd_length(s)
+        product = pd_length(df[i]) * pd_length(s)
         print(df.dot(s))
-        print(df.dot(s).div(product))
+        print(np.arccos(df.dot(s).div(product)))
     pass
 
 db.to_db()
