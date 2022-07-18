@@ -5,7 +5,7 @@ import pandas as pd
 import userdata_to_db as db
 import sqlite3
 from sklearn.metrics.pairwise import paired_distances,cosine_similarity
-
+from simiilarity_calculate import *
 
 
 class user_data():
@@ -164,27 +164,7 @@ def create_matrix(list):
                 
     return product
 
-def pd_length(*args):
-    sum = 0.0
-    print('===='*40)
-    for i in range(len(args[0])):
-        sum += pow(args[0][i], 2)
-        pass
-    sum = sqrt(sum)
-    return sum
 
-def pd_distance(matrix):
-    
-    pass
-
-def self_cos_similarity(matrix):
-    df = pd.DataFrame(matrix)
-    for i in range(len(matrix)):
-        s = pd.Series(matrix[i])
-        product = pd_length(df[i]) * pd_length(s)
-        print(df.dot(s))
-        print(np.arccos(df.dot(s).div(product)))
-    pass
 
 db.to_db()
 
