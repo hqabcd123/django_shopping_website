@@ -21,12 +21,22 @@
 <div class="product-borad">
     {% if command.username != None %}
     <a>User: </a>
-    <a class="username">{{command.username}}</a>
+    <div class="username">
+        <a>{{command.username}}</a>
+    </div>
     </br>
     <a>Command: </a>
-    <a class="command">{{command.command}}</a>
+    <div class="command">
+        <a>{{command.command}}</a>
+    </div>
     {% endif %}
 </div>
 {% endfor %}
-
+<div class="command_form">
+    <form action="./{{Data_form.board.0.product_code.product_code}}" method="post">{% csrf_token %}
+        <input type="text" name="command"></input>
+        <input type="submit" value="submit"></input>
+    </form>
+</div>
 {% endblock Data_form_import %}
+

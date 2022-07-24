@@ -248,6 +248,18 @@ def adv_page(request):
     return render(request, 'app/adv_page.html', context)
 
 def product_delta(request, url_product_code):
+    if request.method == 'POST':
+        command = request.POST.get('command')
+        user = request.user.username
+        code = product_code.objects.get(product_code=url_product_code)
+        if request.user.is_authenticated:
+            discuss_borad.objects.create(
+                product_code=code,
+                username=user,
+                command=command,
+            )
+            pass
+        pass 
     print(url_product_code)
     code = product_code.objects.get(product_code=url_product_code)
     product = code.product_borad_set.all()[0]
